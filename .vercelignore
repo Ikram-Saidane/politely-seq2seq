@@ -9,3 +9,8 @@ report_latex
 *.ipynb
 *.docx
 NLP_Project_Dataset.csv
+*.py
+requirements.txt
+pytest.ini
+*.bat
+.streamlit
