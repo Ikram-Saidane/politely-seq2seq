@@ -1,0 +1,19 @@
+{
+  "name": "sanity_E_attention_h128",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.1183886732273299,
+  "best_valid_ppl": 1.1256815486322114,
+  "best_valid_token_acc": 0.9689807976366323,
+  "train_minutes": 0.3060519933700562,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 132096,
+    "attention": 33024,
+    "decoder RNN": 197632,
+    "output layer": 282125,
+    "copy switch (p_gen)": 0,
+    "total": 875917
+  }
+}

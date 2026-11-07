@@ -1,0 +1,16 @@
+{
+  "BLEU": 29.98551610734181,
+  "chrF": 49.587617342075646,
+  "exact_match": 0.0,
+  "content_preservation": 1.0,
+  "politeness": 0.24140549629797872,
+  "polite_rate": 0.06944444444444445,
+  "repetition_rate": 0.0,
+  "unk_rate": 0.0,
+  "success_rate": 0.06944444444444445,
+  "avg_len": 9.847222222222221,
+  "n": 72,
+  "BLEU_sacrebleu": 29.985516107341805,
+  "system": "baseline_rules",
+  "split": "challenge"
+}

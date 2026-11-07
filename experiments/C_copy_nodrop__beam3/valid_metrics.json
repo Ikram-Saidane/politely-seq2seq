@@ -1,0 +1,22 @@
+{
+  "BLEU": 78.15426365760754,
+  "chrF": 83.79264624881866,
+  "exact_match": 0.5177777777777778,
+  "content_preservation": 0.9998518518518518,
+  "politeness": 0.9732174875486129,
+  "polite_rate": 1.0,
+  "repetition_rate": 0.0,
+  "unk_rate": 0.0,
+  "success_rate": 0.9992592592592593,
+  "avg_len": 18.052592592592593,
+  "n": 1350,
+  "BLEU_sacrebleu": 78.15426365760752,
+  "decoding": "beam3",
+  "decode_seconds": 26.91712498664856,
+  "model": "C_copy_nodrop",
+  "params": 1665038,
+  "train_minutes": 53.67565336227417,
+  "best_epoch": 16,
+  "system": "C_copy_nodrop__beam3",
+  "split": "valid"
+}

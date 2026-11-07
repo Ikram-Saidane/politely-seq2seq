@@ -1,0 +1,19 @@
+{
+  "name": "C_copy_nodrop",
+  "best_epoch": 16,
+  "epochs_run": 19,
+  "best_valid_loss": 0.09671570880424464,
+  "best_valid_ppl": 1.1015471689406144,
+  "best_valid_token_acc": 0.955210913287602,
+  "train_minutes": 53.67565336227417,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 395264,
+    "attention": 65792,
+    "decoder RNN": 657408,
+    "output layer": 314893,
+    "copy switch (p_gen)": 641,
+    "total": 1665038
+  }
+}

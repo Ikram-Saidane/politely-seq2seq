@@ -1,0 +1,251 @@
+{
+  "splits": {
+    "train": {
+      "pairs": 28800,
+      "inputs": 14400,
+      "references_per_input": 2.0,
+      "categories": {
+        "request": 1600,
+        "reminder": 1600,
+        "refusal": 1600,
+        "criticism": 1600,
+        "complaint": 1600,
+        "disagreement": 1600,
+        "question": 1600,
+        "stop": 1600,
+        "announcement": 1600
+      },
+      "impolite_len_mean": 13.05,
+      "impolite_len_max": 28,
+      "polite_len_mean": 17.77,
+      "polite_len_max": 31,
+      "token_overlap_mean": 0.528,
+      "distinct_1": 0.009,
+      "distinct_2": 0.0646,
+      "distinct_3": 0.1803,
+      "impolite_word_types": 1693,
+      "impolite_templates": 81
+    },
+    "valid": {
+      "pairs": 4050,
+      "inputs": 1350,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 150,
+        "reminder": 150,
+        "refusal": 150,
+        "criticism": 150,
+        "complaint": 150,
+        "disagreement": 150,
+        "question": 150,
+        "stop": 150,
+        "announcement": 150
+      },
+      "impolite_len_mean": 13.31,
+      "impolite_len_max": 26,
+      "polite_len_mean": 18.04,
+      "polite_len_max": 31,
+      "token_overlap_mean": 0.536,
+      "distinct_1": 0.0588,
+      "distinct_2": 0.2346,
+      "distinct_3": 0.4454,
+      "impolite_word_types": 1056,
+      "impolite_templates": 81
+    },
+    "test": {
+      "pairs": 4050,
+      "inputs": 1350,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 150,
+        "reminder": 150,
+        "refusal": 150,
+        "criticism": 150,
+        "complaint": 150,
+        "disagreement": 150,
+        "question": 150,
+        "stop": 150,
+        "announcement": 150
+      },
+      "impolite_len_mean": 13.22,
+      "impolite_len_max": 27,
+      "polite_len_mean": 17.99,
+      "polite_len_max": 30,
+      "token_overlap_mean": 0.535,
+      "distinct_1": 0.0582,
+      "distinct_2": 0.2335,
+      "distinct_3": 0.4438,
+      "impolite_word_types": 1039,
+      "impolite_templates": 81
+    },
+    "test_unseen": {
+      "pairs": 2700,
+      "inputs": 900,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 100,
+        "reminder": 100,
+        "refusal": 100,
+        "criticism": 100,
+        "complaint": 100,
+        "disagreement": 100,
+        "question": 100,
+        "stop": 100,
+        "announcement": 100
+      },
+      "impolite_len_mean": 14.1,
+      "impolite_len_max": 27,
+      "polite_len_mean": 17.94,
+      "polite_len_max": 30,
+      "token_overlap_mean": 0.557,
+      "distinct_1": 0.07,
+      "distinct_2": 0.2405,
+      "distinct_3": 0.4304,
+      "impolite_word_types": 888,
+      "impolite_templates": 27
+    },
+    "challenge": {
+      "pairs": 72,
+      "inputs": 72,
+      "references_per_input": 1.0,
+      "categories": {
+        "request": 8,
+        "reminder": 8,
+        "refusal": 8,
+        "criticism": 8,
+        "complaint": 8,
+        "disagreement": 8,
+        "question": 8,
+        "stop": 8,
+        "announcement": 8
+      },
+      "impolite_len_mean": 8.0,
+      "impolite_len_max": 12,
+      "polite_len_mean": 11.92,
+      "polite_len_max": 21,
+      "token_overlap_mean": 0.483,
+      "distinct_1": 0.4844,
+      "distinct_2": 0.9484,
+      "distinct_3": 0.9977,
+      "impolite_word_types": 279
+    }
+  },
+  "checks": {
+    "inputs_shared_between_splits": {
+      "train/valid": 0,
+      "train/test": 0,
+      "train/test_unseen": 0,
+      "train/challenge": 0,
+      "valid/test": 0,
+      "valid/test_unseen": 0,
+      "valid/challenge": 0,
+      "test/test_unseen": 0,
+      "test/challenge": 0,
+      "test_unseen/challenge": 0
+    },
+    "duplicate_pairs": 0,
+    "pairs_with_identical_input_output": 0
+  },
+  "most_common_content_words_train": [
+    [
+      "stop",
+      1629
+    ],
+    [
+      "room",
+      830
+    ],
+    [
+      "time",
+      814
+    ],
+    [
+      "way",
+      813
+    ],
+    [
+      "week",
+      726
+    ],
+    [
+      "last",
+      717
+    ],
+    [
+      "asking",
+      710
+    ],
+    [
+      "morning",
+      696
+    ],
+    [
+      "meeting",
+      675
+    ],
+    [
+      "wrong",
+      641
+    ],
+    [
+      "day",
+      623
+    ],
+    [
+      "twice",
+      564
+    ],
+    [
+      "number",
+      556
+    ],
+    [
+      "ask",
+      544
+    ],
+    [
+      "tell",
+      543
+    ],
+    [
+      "haven't",
+      539
+    ],
+    [
+      "monday",
+      538
+    ],
+    [
+      "even",
+      524
+    ],
+    [
+      "before",
+      518
+    ],
+    [
+      "fix",
+      505
+    ],
+    [
+      "tomorrow",
+      493
+    ],
+    [
+      "pm",
+      471
+    ],
+    [
+      "seriously",
+      470
+    ],
+    [
+      "friday",
+      457
+    ],
+    [
+      "end",
+      436
+    ]
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "features": 12680,
+  "accuracy": {
+    "valid": {
+      "impolite_recognised": 1.0,
+      "polite_recognised": 1.0,
+      "balanced": 1.0
+    },
+    "test": {
+      "impolite_recognised": 1.0,
+      "polite_recognised": 1.0,
+      "balanced": 1.0
+    },
+    "test_unseen": {
+      "impolite_recognised": 0.9656,
+      "polite_recognised": 1.0,
+      "balanced": 0.9828
+    },
+    "challenge": {
+      "impolite_recognised": 1.0,
+      "polite_recognised": 0.7778,
+      "balanced": 0.8889
+    }
+  },
+  "top_features": {
+    "polite": [
+      [
+        "could",
+        1.62
+      ],
+      [
+        "i",
+        1.06
+      ],
+      [
+        "a",
+        0.96
+      ],
+      [
+        "but",
+        0.95
+      ],
+      [
+        ", but",
+        0.95
+      ],
+      [
+        "would",
+        0.89
+      ],
+      [
+        "could you",
+        0.87
+      ],
+      [
+        "if",
+        0.86
+      ],
+      [
+        "please",
+        0.8
+      ],
+      [
+        "you",
+        0.79
+      ],
+      [
+        "sorry",
+        0.78
+      ],
+      [
+        "be",
+        0.77
+      ],
+      [
+        "<s> would",
+        0.74
+      ],
+      [
+        "<s> could",
+        0.66
+      ],
+      [
+        "to",
+        0.61
+      ]
+    ],
+    "impolite": [
+      [
+        ". </s>",
+        -0.88
+      ],
+      [
+        ".",
+        -0.68
+      ],
+      [
+        "not",
+        -0.53
+      ],
+      [
+        "no",
+        -0.52
+      ],
+      [
+        "stop",
+        -0.52
+      ],
+      [
+        "it's",
+        -0.37
+      ],
+      [
+        "twice",
+        -0.35
+      ],
+      [
+        "the",
+        -0.35
+      ],
+      [
+        "already",
+        -0.34
+      ],
+      [
+        "<s> the",
+        -0.33
+      ],
+      [
+        "seriously",
+        -0.33
+      ],
+      [
+        "do",
+        -0.33
+      ],
+      [
+        "how",
+        -0.32
+      ],
+      [
+        "why",
+        -0.32
+      ],
+      [
+        "<s> how",
+        -0.3
+      ]
+    ]
+  }
+}

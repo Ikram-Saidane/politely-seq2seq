@@ -1,0 +1,15 @@
+F_attention_tf0.5: device=cpu parameters=1,664,397 {'embedding (shared)': 231040, 'encoder': 395264, 'attention': 65792, 'decoder RNN': 657408, 'output layer': 314893, 'copy switch (p_gen)': 0, 'total': 1664397}
+epoch  1  train 3.2393 acc 0.369  valid 1.1090 acc 0.760 ppl   3.03  lr 1.0e-03  90s  *
+epoch  2  train 1.3183 acc 0.695  valid 0.3963 acc 0.908 ppl   1.49  lr 1.0e-03  88s  *
+epoch  3  train 0.8033 acc 0.810  valid 0.2456 acc 0.939 ppl   1.28  lr 1.0e-03  85s  *
+epoch  4  train 0.6652 acc 0.840  valid 0.2339 acc 0.940 ppl   1.26  lr 1.0e-03  88s  *
+epoch  5  train 0.4961 acc 0.874  valid 0.1884 acc 0.947 ppl   1.21  lr 1.0e-03  88s  *
+epoch  6  train 0.5076 acc 0.873  valid 0.1967 acc 0.946 ppl   1.22  lr 1.0e-03  89s
+epoch  7  train 0.4805 acc 0.878  valid 0.1790 acc 0.950 ppl   1.20  lr 1.0e-03  89s  *
+epoch  8  train 0.4411 acc 0.883  valid 0.1811 acc 0.947 ppl   1.20  lr 1.0e-03  89s
+epoch  9  train 0.3855 acc 0.894  valid 0.1750 acc 0.948 ppl   1.19  lr 1.0e-03  91s  *
+epoch 10  train 0.4259 acc 0.882  valid 0.2054 acc 0.945 ppl   1.23  lr 1.0e-03  93s
+epoch 11  train 0.4273 acc 0.884  valid 0.1753 acc 0.950 ppl   1.19  lr 5.0e-04  90s
+epoch 12  train 0.4000 acc 0.892  valid 0.1813 acc 0.951 ppl   1.20  lr 5.0e-04  91s
+early stopping after 3 epochs without improvement
+{"name": "F_attention_tf0.5", "best_epoch": 9, "epochs_run": 12, "best_valid_loss": 0.17497537226261237, "best_valid_ppl": 1.191216879274629, "best_valid_token_acc": 0.9475861353527757, "train_minutes": 17.870011599858604, "device": "cpu", "params": {"embedding (shared)": 231040, "encoder": 395264, "attention": 65792, "decoder RNN": 657408, "output layer": 314893, "copy switch (p_gen)": 0, "total": 1664397}}

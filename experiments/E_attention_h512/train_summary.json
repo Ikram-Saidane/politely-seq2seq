@@ -1,0 +1,19 @@
+{
+  "name": "E_attention_h512",
+  "best_epoch": 4,
+  "epochs_run": 7,
+  "best_valid_loss": 0.13710933954251334,
+  "best_valid_ppl": 1.1469535490409917,
+  "best_valid_token_acc": 0.9505556492083458,
+  "train_minutes": 21.169791154066722,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 1314816,
+    "attention": 131328,
+    "decoder RNN": 2363392,
+    "output layer": 380429,
+    "copy switch (p_gen)": 0,
+    "total": 4421005
+  }
+}

@@ -1,0 +1,10 @@
+category,test,test_unseen,challenge
+announcement,1.0,1.0,0.625
+complaint,1.0,0.67,0.625
+criticism,1.0,0.85,0.75
+disagreement,1.0,0.61,0.625
+question,1.0,0.83,1.0
+refusal,1.0,0.69,0.5
+reminder,0.993,0.91,0.875
+request,1.0,0.64,1.0
+stop,1.0,0.88,0.875

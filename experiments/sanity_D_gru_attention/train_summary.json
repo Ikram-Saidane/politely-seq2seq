@@ -1,0 +1,19 @@
+{
+  "name": "sanity_D_gru_attention",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.0674203960018637,
+  "best_valid_ppl": 1.0697451002214693,
+  "best_valid_token_acc": 0.9689807976366323,
+  "train_minutes": 0.3082001407941182,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 296448,
+    "attention": 65792,
+    "decoder RNN": 493056,
+    "output layer": 314893,
+    "copy switch (p_gen)": 0,
+    "total": 1401229
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "Politely \u2014 synthetic impolite-to-polite paraphrase pairs (English)",
+  "seed": 42,
+  "categories": {
+    "request": "asking someone to do something",
+    "reminder": "following up on something not done yet",
+    "refusal": "declining a request or an invitation",
+    "criticism": "giving negative feedback on a piece of work",
+    "complaint": "complaining about a service problem",
+    "disagreement": "correcting a fact someone got wrong",
+    "question": "asking for information",
+    "stop": "asking someone to stop a behaviour",
+    "announcement": "announcing a change to an event"
+  },
+  "pairs_per_split": {
+    "train": 28800,
+    "valid": 4050,
+    "test": 4050,
+    "test_unseen": 2700
+  },
+  "inputs_per_split": {
+    "train": 14400,
+    "valid": 1350,
+    "test": 1350,
+    "test_unseen": 900
+  },
+  "references_per_input": {
+    "train": 2,
+    "valid/test/test_unseen": 3
+  },
+  "impolite_templates": {
+    "request": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "reminder": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "refusal": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "criticism": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "complaint": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "disagreement": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "question": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "stop": {
+      "seen": 9,
+      "held_out": 3
+    },
+    "announcement": {
+      "seen": 9,
+      "held_out": 3
+    }
+  },
+  "polite_templates_per_category": {
+    "request": 6,
+    "reminder": 6,
+    "refusal": 6,
+    "criticism": 6,
+    "complaint": 6,
+    "disagreement": 6,
+    "question": 6,
+    "stop": 6,
+    "announcement": 6
+  }
+}

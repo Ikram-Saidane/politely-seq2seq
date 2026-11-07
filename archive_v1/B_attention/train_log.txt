@@ -1,0 +1,12 @@
+B_attention: device=cpu parameters=1,552,859 {'embedding (shared)': 175488, 'encoder': 395264, 'attention': 65792, 'decoder RNN': 657408, 'output layer': 258907, 'copy switch (p_gen)': 0, 'total': 1552859}
+epoch  1  train 2.0424 acc 0.571  valid 0.6041 acc 0.837 ppl   1.83  lr 1.0e-03  62s  *
+epoch  2  train 0.4701 acc 0.868  valid 0.2191 acc 0.935 ppl   1.24  lr 1.0e-03  61s  *
+epoch  3  train 0.2131 acc 0.932  valid 0.1578 acc 0.945 ppl   1.17  lr 1.0e-03  232s  *
+epoch  4  train 0.1570 acc 0.943  valid 0.1508 acc 0.948 ppl   1.16  lr 1.0e-03  59s  *
+epoch  5  train 0.1387 acc 0.947  valid 0.1505 acc 0.949 ppl   1.16  lr 1.0e-03  57s  *
+epoch  6  train 0.1277 acc 0.948  valid 0.1487 acc 0.948 ppl   1.16  lr 1.0e-03  60s  *
+epoch  7  train 0.1210 acc 0.949  valid 0.1536 acc 0.949 ppl   1.17  lr 1.0e-03  60s
+epoch  8  train 0.1182 acc 0.950  valid 0.1538 acc 0.949 ppl   1.17  lr 5.0e-04  60s
+epoch  9  train 0.1097 acc 0.952  valid 0.1543 acc 0.950 ppl   1.17  lr 5.0e-04  59s
+early stopping after 3 epochs without improvement
+{"name": "B_attention", "best_epoch": 6, "epochs_run": 9, "best_valid_loss": 0.14867320279972718, "best_valid_ppl": 1.1602937464968832, "best_valid_token_acc": 0.9479263283423877, "train_minutes": 11.850370931625367, "device": "cpu", "params": {"embedding (shared)": 175488, "encoder": 395264, "attention": 65792, "decoder RNN": 657408, "output layer": 258907, "copy switch (p_gen)": 0, "total": 1552859}}

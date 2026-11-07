@@ -1,0 +1,251 @@
+{
+  "splits": {
+    "train": {
+      "pairs": 21600,
+      "inputs": 10800,
+      "references_per_input": 2.0,
+      "categories": {
+        "request": 1200,
+        "reminder": 1200,
+        "refusal": 1200,
+        "criticism": 1200,
+        "complaint": 1200,
+        "disagreement": 1200,
+        "question": 1200,
+        "stop": 1200,
+        "announcement": 1200
+      },
+      "impolite_len_mean": 12.85,
+      "impolite_len_max": 24,
+      "polite_len_mean": 17.51,
+      "polite_len_max": 30,
+      "token_overlap_mean": 0.524,
+      "distinct_1": 0.0091,
+      "distinct_2": 0.0532,
+      "distinct_3": 0.1468,
+      "impolite_word_types": 1265,
+      "impolite_templates": 81
+    },
+    "valid": {
+      "pairs": 4050,
+      "inputs": 1350,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 150,
+        "reminder": 150,
+        "refusal": 150,
+        "criticism": 150,
+        "complaint": 150,
+        "disagreement": 150,
+        "question": 150,
+        "stop": 150,
+        "announcement": 150
+      },
+      "impolite_len_mean": 13.02,
+      "impolite_len_max": 22,
+      "polite_len_mean": 17.63,
+      "polite_len_max": 30,
+      "token_overlap_mean": 0.53,
+      "distinct_1": 0.0409,
+      "distinct_2": 0.1809,
+      "distinct_3": 0.3741,
+      "impolite_word_types": 719,
+      "impolite_templates": 81
+    },
+    "test": {
+      "pairs": 4050,
+      "inputs": 1350,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 150,
+        "reminder": 150,
+        "refusal": 150,
+        "criticism": 150,
+        "complaint": 150,
+        "disagreement": 150,
+        "question": 150,
+        "stop": 150,
+        "announcement": 150
+      },
+      "impolite_len_mean": 13.17,
+      "impolite_len_max": 23,
+      "polite_len_mean": 17.76,
+      "polite_len_max": 30,
+      "token_overlap_mean": 0.531,
+      "distinct_1": 0.0402,
+      "distinct_2": 0.1744,
+      "distinct_3": 0.3624,
+      "impolite_word_types": 714,
+      "impolite_templates": 81
+    },
+    "test_unseen": {
+      "pairs": 2700,
+      "inputs": 900,
+      "references_per_input": 3.0,
+      "categories": {
+        "request": 100,
+        "reminder": 100,
+        "refusal": 100,
+        "criticism": 100,
+        "complaint": 100,
+        "disagreement": 100,
+        "question": 100,
+        "stop": 100,
+        "announcement": 100
+      },
+      "impolite_len_mean": 13.74,
+      "impolite_len_max": 21,
+      "polite_len_mean": 17.59,
+      "polite_len_max": 29,
+      "token_overlap_mean": 0.549,
+      "distinct_1": 0.0484,
+      "distinct_2": 0.1853,
+      "distinct_3": 0.3614,
+      "impolite_word_types": 599,
+      "impolite_templates": 27
+    },
+    "challenge": {
+      "pairs": 72,
+      "inputs": 72,
+      "references_per_input": 1.0,
+      "categories": {
+        "request": 8,
+        "reminder": 8,
+        "refusal": 8,
+        "criticism": 8,
+        "complaint": 8,
+        "disagreement": 8,
+        "question": 8,
+        "stop": 8,
+        "announcement": 8
+      },
+      "impolite_len_mean": 8.0,
+      "impolite_len_max": 12,
+      "polite_len_mean": 11.92,
+      "polite_len_max": 21,
+      "token_overlap_mean": 0.483,
+      "distinct_1": 0.4844,
+      "distinct_2": 0.9484,
+      "distinct_3": 0.9977,
+      "impolite_word_types": 279
+    }
+  },
+  "checks": {
+    "inputs_shared_between_splits": {
+      "train/valid": 0,
+      "train/test": 0,
+      "train/test_unseen": 0,
+      "train/challenge": 0,
+      "valid/test": 0,
+      "valid/test_unseen": 0,
+      "valid/challenge": 0,
+      "test/test_unseen": 0,
+      "test/challenge": 0,
+      "test_unseen/challenge": 0
+    },
+    "duplicate_pairs": 0,
+    "pairs_with_identical_input_output": 0
+  },
+  "most_common_content_words_train": [
+    [
+      "stop",
+      1216
+    ],
+    [
+      "meeting",
+      947
+    ],
+    [
+      "time",
+      627
+    ],
+    [
+      "number",
+      592
+    ],
+    [
+      "session",
+      589
+    ],
+    [
+      "way",
+      550
+    ],
+    [
+      "morning",
+      542
+    ],
+    [
+      "sent",
+      508
+    ],
+    [
+      "asking",
+      476
+    ],
+    [
+      "wrong",
+      465
+    ],
+    [
+      "seriously",
+      441
+    ],
+    [
+      "moved",
+      435
+    ],
+    [
+      "monday",
+      417
+    ],
+    [
+      "last",
+      417
+    ],
+    [
+      "ask",
+      403
+    ],
+    [
+      "even",
+      395
+    ],
+    [
+      "before",
+      391
+    ],
+    [
+      "week",
+      390
+    ],
+    [
+      "tell",
+      390
+    ],
+    [
+      "end",
+      388
+    ],
+    [
+      "haven't",
+      385
+    ],
+    [
+      "friday",
+      384
+    ],
+    [
+      "room",
+      372
+    ],
+    [
+      "call",
+      365
+    ],
+    [
+      "fix",
+      363
+    ]
+  ]
+}

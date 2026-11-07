@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politely — rewrite impolite sentences</title>
+<meta name="description" content="A from-scratch LSTM encoder–decoder with attention that rewrites impolite English sentences into polite ones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="/static/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23176f63'/%3E%3Cpath d='M9 11h14v8h-6l-4 4v-4H9z' fill='white'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#rewrite" aria-label="Politely home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9"/><path d="M9 11h14v8h-6l-4 4v-4H9z"/></svg>
+      <span>Politely</span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="rewrite" aria-selected="true">Rewrite</button>
+      <button role="tab" data-tab="compare" aria-selected="false">Compare</button>
+      <button role="tab" data-tab="performance" aria-selected="false">Performance</button>
+      <button role="tab" data-tab="dataset" aria-selected="false">Dataset</button>
+      <button role="tab" data-tab="how" aria-selected="false">How it works</button>
+    </nav>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light / dark theme" title="Switch theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<!-- =============================================================== REWRITE -->
+<section class="panel" id="panel-rewrite" role="tabpanel">
+  <div class="hero">
+    <p class="eyebrow">Encoder–decoder · built and trained from scratch</p>
+    <h1>Say the same thing, <em>kindly</em>.</h1>
+    <p class="lede">Type a blunt or impatient English sentence. A small LSTM encoder–decoder with attention, trained on 28,800 sentence pairs, rewrites it politely while keeping its meaning.</p>
+  </div>
+
+  <div class="workbench">
+    <form class="card input-card" id="rewriteForm" novalidate>
+      <label class="field-label" for="inputText">Impolite sentence</label>
+      <div class="textarea-wrap">
+        <textarea id="inputText" rows="4" maxlength="300" placeholder="e.g. Send me the report now." aria-describedby="charCount inputError"></textarea>
+        <span class="counter" id="charCount">0 / 300</span>
+      </div>
+      <p class="error" id="inputError" role="alert" hidden></p>
+
+      <div class="examples">
+        <span class="field-label small">Try an example</span>
+        <div class="chips" id="exampleChips"></div>
+      </div>
+
+      <div class="controls">
+        <div class="control">
+          <label class="field-label small" for="modelSelect">Model</label>
+          <select id="modelSelect"></select>
+        </div>
+        <div class="control">
+          <span class="field-label small" id="decLabel">Decoding</span>
+          <div class="segmented" role="radiogroup" aria-labelledby="decLabel">
+            <button type="button" role="radio" data-dec="greedy" aria-checked="false">Greedy</button>
+            <button type="button" role="radio" data-dec="beam" aria-checked="true">Beam</button>
+            <button type="button" role="radio" data-dec="sample" aria-checked="false">Sample</button>
+          </div>
+        </div>
+        <div class="control" id="beamCtl">
+          <label class="field-label small" for="beamSize">Beam size <output id="beamOut">5</output></label>
+          <input type="range" id="beamSize" min="2" max="10" value="5">
+        </div>
+        <div class="control" id="tempCtl" hidden>
+          <label class="field-label small" for="temp">Temperature <output id="tempOut">0.8</output></label>
+          <input type="range" id="temp" min="0.2" max="1.5" step="0.1" value="0.8">
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit" id="goBtn"><span>Make it polite</span><kbd>Ctrl ⏎</kbd></button>
+        <button class="btn ghost" type="button" id="clearBtn">Clear</button>
+      </div>
+    </form>
+
+    <article class="card output-card" id="outputCard" aria-live="polite">
+      <div class="empty-state" id="emptyState">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 12h32v18H24l-8 8v-8H8z"/></svg>
+        <p>Your polite version will appear here, with what the model kept, how polite it sounds, and where it looked while writing.</p>
+      </div>
+      <div id="result" hidden>
+        <div class="result-head">
+          <span class="field-label small">Polite version</span>
+          <button class="btn tiny" type="button" id="copyBtn">Copy</button>
+        </div>
+        <p class="polite-text" id="politeText"></p>
+        <p class="meta" id="resultMeta"></p>
+        <div class="scores">
+          <div class="score">
+            <span class="score-label">Politeness</span>
+            <div class="meter-pair">
+              <div class="meter"><span class="meter-name">Before</span><div class="bar"><i id="pIn"></i></div><b id="pInV"></b></div>
+              <div class="meter"><span class="meter-name">After</span><div class="bar good"><i id="pOut"></i></div><b id="pOutV"></b></div>
+            </div>
+          </div>
+          <div class="score">
+            <span class="score-label">Meaning kept <b id="contentV"></b></span>
+            <div class="chips static" id="keptChips"></div>
+          </div>
+        </div>
+        <div class="warnings" id="warnings" hidden></div>
+      </div>
+    </article>
+  </div>
+
+  <section class="card inside" id="insideCard" hidden>
+    <div class="inside-head">
+      <h2>Inside the model</h2>
+      <p class="muted">Each row is a word the decoder generated; darker cells are the input words it attended to. Hover a cell for the exact weight.</p>
+    </div>
+    <div class="heatmap-scroll"><div class="heatmap" id="heatmap" role="img" aria-label="Attention map"></div></div>
+    <div class="token-bars" id="tokenBars"></div>
+    <div class="tooltip" id="tooltip" hidden></div>
+  </section>
+</section>
+
+<!-- =============================================================== COMPARE -->
+<section class="panel" id="panel-compare" role="tabpanel" hidden>
+  <div class="hero compact">
+    <p class="eyebrow">Same sentence, every system</p>
+    <h1>Compare the models</h1>
+    <p class="lede">A model is only useful if it beats both baselines: copying the input keeps the meaning but stays rude; the hand-written rules sound a little nicer but rarely become polite.</p>
+  </div>
+  <form class="card compare-form" id="compareForm" novalidate>
+    <label class="field-label" for="compareText">Impolite sentence</label>
+    <div class="row">
+      <input type="text" id="compareText" maxlength="300" placeholder="e.g. Why haven't you replied to my email yet?">
+      <button class="btn primary" type="submit">Compare</button>
+    </div>
+    <p class="error" id="compareError" role="alert" hidden></p>
+  </form>
+  <div class="compare-grid" id="compareGrid"></div>
+</section>
+
+<!-- =============================================================== PERFORMANCE -->
+<section class="panel" id="panel-performance" role="tabpanel" hidden>
+  <div class="hero compact">
+    <p class="eyebrow">Measured, not claimed</p>
+    <h1>How well does it work?</h1>
+    <p class="lede">Every number below comes from <code>experiments/*/*_metrics.json</code>, produced by <code>python -m politely.evaluate</code>. <b>Success</b> = the output is judged polite, keeps all the content words, and repeats no word.</p>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <h2>Results by evaluation set</h2>
+      <div class="segmented" role="radiogroup" aria-label="Evaluation set" id="splitSeg">
+        <button type="button" role="radio" data-split="test" aria-checked="true">Test</button>
+        <button type="button" role="radio" data-split="test_unseen" aria-checked="false">Unseen phrasings</button>
+        <button type="button" role="radio" data-split="challenge" aria-checked="false">Hand-written</button>
+      </div>
+    </div>
+    <p class="muted" id="splitNote"></p>
+    <div class="chart" id="successChart"></div>
+    <div class="table-scroll"><table class="data" id="resultsTable"></table></div>
+  </div>
+  <div class="card">
+    <h2>Checked by hand</h2>
+    <p class="muted">Automatic metrics cannot see grammar or a reversed meaning. Outputs of the final system (★) were judged one by one: <b>acceptable</b> = polite, same meaning, grammatical. Labels in <code>reports/human_eval_*.csv</code>.</p>
+    <div class="table-scroll"><table class="data" id="humanTable"></table></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head"><h2>Learning curves</h2><select id="curveModel" aria-label="Model"></select></div>
+      <div class="chart" id="curveChart"></div>
+      <p class="muted small">Cross-entropy per token. Validation is computed with teacher forcing.</p>
+    </div>
+    <div class="card">
+      <h2>Validation loss of every model</h2>
+      <div class="chart" id="allCurves"></div>
+      <p class="muted small">Lower is better. Attention lowers the loss far more than any change of size or cell type.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== DATASET -->
+<section class="panel" id="panel-dataset" role="tabpanel" hidden>
+  <div class="hero compact">
+    <p class="eyebrow">Synthetic, balanced, offensive-free</p>
+    <h1>The dataset</h1>
+    <p class="lede">Generated by a reproducible script from hand-written situations and phrasings. Impolite means blunt, impatient or dismissive, never insulting. Splits never share content, and one test set uses phrasings the model never saw.</p>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="two-col">
+    <div class="card"><h2>Inputs per category (train)</h2><div class="chart" id="catChart"></div></div>
+    <div class="card"><h2>Splits</h2><div class="table-scroll"><table class="data" id="splitTable"></table></div>
+      <ul class="checks" id="checks"></ul></div>
+  </div>
+  <div class="card"><h2>Examples</h2><div class="examples-list" id="examplesList"></div></div>
+</section>
+
+<!-- =============================================================== HOW -->
+<section class="panel" id="panel-how" role="tabpanel" hidden>
+  <div class="hero compact">
+    <p class="eyebrow">From text to text</p>
+    <h1>How it works</h1>
+  </div>
+  <ol class="pipeline">
+    <li><b>Preprocess</b><span>Normalise Unicode, lowercase, split into words and punctuation marks.</span></li>
+    <li><b>Vocabulary</b><span>1,805 entries: 1,801 words seen at least twice in training plus &lt;PAD&gt; &lt;SOS&gt; &lt;EOS&gt; &lt;UNK&gt;.</span></li>
+    <li><b>Represent</b><span>Each word id becomes a 128-dimensional embedding vector.</span></li>
+    <li><b>Encode</b><span>An LSTM reads the sentence and produces one hidden state per word.</span></li>
+    <li><b>Attend</b><span>At each step the decoder scores every input state and builds a weighted context vector.</span></li>
+    <li><b>Decode</b><span>An LSTM writes the polite sentence one word at a time, from &lt;SOS&gt; until &lt;EOS&gt;.</span></li>
+    <li><b>Evaluate</b><span>BLEU, chrF, exact match, content kept, politeness (own classifier), success rate.</span></li>
+  </ol>
+  <div class="card prose">
+    <h2>Limits worth knowing</h2>
+    <ul>
+      <li>The training data is synthetic: everyday workplace and service situations, written from templates. Sentences far from these situations are rewritten less reliably — the “Hand-written” results in the Performance tab measure exactly that.</li>
+      <li>English only, one sentence (or two short ones) at a time, up to 40 tokens.</li>
+      <li>Politeness is judged by a small bag-of-words classifier trained on the same data: a useful indicator, not a human judgement.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <p>Politely · NLP course project · PyTorch encoder–decoder implemented and trained from scratch · <a href="/api/docs">API</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "D_gru_attention",
+  "best_epoch": 7,
+  "epochs_run": 10,
+  "best_valid_loss": 0.1367863656660889,
+  "best_valid_ppl": 1.1465831728213205,
+  "best_valid_token_acc": 0.95087983194367,
+  "train_minutes": 11.923311467965444,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 296448,
+    "attention": 65792,
+    "decoder RNN": 493056,
+    "output layer": 314893,
+    "copy switch (p_gen)": 0,
+    "total": 1401229
+  }
+}

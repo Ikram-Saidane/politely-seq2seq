@@ -1,0 +1,19 @@
+{
+  "name": "sanity_C_copy_nodrop",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.11145384378588181,
+  "best_valid_ppl": 1.117902144683972,
+  "best_valid_token_acc": 0.9675036927621861,
+  "train_minutes": 0.43053078254063926,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 395264,
+    "attention": 65792,
+    "decoder RNN": 657408,
+    "output layer": 314893,
+    "copy switch (p_gen)": 641,
+    "total": 1665038
+  }
+}

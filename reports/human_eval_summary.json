@@ -1,0 +1,63 @@
+{
+  "C_copy_nodrop__beam5": {
+    "counts": {
+      "acceptable": 38,
+      "failed": 22,
+      "partial": 12
+    },
+    "acceptable_rate": 0.528,
+    "automatic_success": 0.764,
+    "agreement_auto_vs_human": 0.681,
+    "acceptable_by_category": {
+      "announcement": 0.375,
+      "complaint": 0.5,
+      "criticism": 0.375,
+      "disagreement": 0.625,
+      "question": 0.5,
+      "refusal": 0.125,
+      "reminder": 0.375,
+      "request": 1.0,
+      "stop": 0.875
+    }
+  },
+  "B_attention": {
+    "counts": {
+      "failed": 56,
+      "acceptable": 12,
+      "partial": 4
+    },
+    "acceptable_rate": 0.167,
+    "automatic_success": 0.222,
+    "agreement_auto_vs_human": 0.889,
+    "acceptable_by_category": {
+      "announcement": 0.25,
+      "complaint": 0.125,
+      "criticism": 0.125,
+      "disagreement": 0.0,
+      "question": 0.125,
+      "refusal": 0.0,
+      "reminder": 0.125,
+      "request": 0.375,
+      "stop": 0.375
+    }
+  },
+  "C_copy_nodrop__beam5 (test_unseen, random 40)": {
+    "counts": {
+      "acceptable": 15,
+      "failed": 14,
+      "partial": 11
+    },
+    "acceptable_rate": 0.375,
+    "automatic_success": 0.775,
+    "agreement_auto_vs_human": 0.6
+  },
+  "C_copy_nodrop__beam5 (test, random 40)": {
+    "counts": {
+      "acceptable": 39,
+      "partial": 1
+    },
+    "acceptable_rate": 0.975,
+    "automatic_success": 0.975,
+    "agreement_auto_vs_human": 1.0
+  }
+}

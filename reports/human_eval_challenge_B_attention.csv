@@ -1,0 +1,73 @@
+category,impolite,prediction,automatic_success,human_label
+request,Give me the keys to the storage room.,Could I ask you to bring me the keys to the hallway room? Thank you!,0,failed
+request,Get the slides ready before lunch.,I would really appreciate it if you could empty the slides tomorrow before noon.,0,failed
+request,Write the minutes of the meeting and send them out.,Could I ask you to write the minutes of the meeting as soon as possible? Thank you!,0,partial
+request,Bring me a coffee on your way back.,Could I ask you to bring me a coffee on your way back? Thank you!,1,acceptable
+request,Turn the music down.,I would really appreciate it if you could turn the music down.,1,acceptable
+request,Close the window. It's cold in here.,Could you please close the window? It is in here.,0,partial
+request,Make ten copies of this page for the class.,Could I ask you to make ten copies of this week? Thank you!,0,failed
+request,Order more paper for the printer today.,Could I ask you to order more paper for the printer today? Thank you!,1,acceptable
+reminder,You were supposed to pay the rent yesterday.,Just a friendly reminder to pay the rent.,0,acceptable
+reminder,Where is the feedback you promised me last week?,Could you please let me know where the bakery you is last week?,0,failed
+reminder,I still don't have your signature on the form.,I wanted to follow up: could you submit your glasses on the application?,0,failed
+reminder,You forgot to answer the client again.,I wanted to follow up: could you submit the client visit?,0,failed
+reminder,The library books are overdue. Return them.,I would really appreciate it if you could wash the library after are.,0,failed
+reminder,Send the photos from the trip already.,Could I ask you to send the photos from the hiking trip? Thank you!,1,failed
+reminder,You never booked the restaurant for Saturday.,I would really appreciate it if you could open the boxes for saturday.,0,failed
+reminder,The car still needs to be washed. Do it.,I would really appreciate it if you could wash the car tonight to hamza.,1,failed
+refusal,"No, you can't borrow my notes.",I wanted to follow up: could you lend me my notes?,1,failed
+refusal,I'm not babysitting your kids this weekend.,I'm afraid I won't be able to carry your boxes this weekend. I hope you understand.,0,failed
+refusal,Don't count on me for the camping trip.,I would really appreciate it if you could lend me me for the school trip.,0,failed
+refusal,No. I won't proofread your thesis.,"I'm sorry, but I won't be able to walk your boxes.",0,failed
+refusal,Not interested in your offer.,Could you please avoid fill in your pen?,0,failed
+refusal,I won't lend you any more money.,"I'm sorry, but I won't be able to swap seats.",0,failed
+refusal,Forget about me helping with the move.,I would really appreciate it if you could lend me on the move.,0,failed
+refusal,I'm not giving you a ride to the station.,"I'm sorry, but I won't be able to drive a seat to the station.",0,failed
+criticism,This painting looks unfinished.,I noticed the painting closes is a bit ambitious. Could we work on that together?,1,failed
+criticism,Your handwriting is impossible to read.,"I appreciate the effort on the speech, but it is a bit hard to read.",0,failed
+criticism,The soup is way too salty.,"The soup is a good start, but I feel it is a little salty.",1,acceptable
+criticism,These photos are all blurry.,"I could be wrong, but as far as I know marc wrote the proposal.",0,failed
+criticism,Your answer doesn't even address the question.,I noticed the answer sent the farewell is a little sweet. Could we work on that together?,0,failed
+criticism,The colors on this poster are awful.,"I appreciate the effort on the windows on this weekend, but it is a bit ambitious.",0,failed
+criticism,The lecture was boring from start to finish.,Could I ask you to wash the boxes was changed? There may be possible?,0,failed
+criticism,The new layout is cluttered.,I noticed the new layout is a little overcooked. Could we work on that together?,0,failed
+complaint,My room has no hot water.,Could you please help me? My room has no hot water.,1,acceptable
+complaint,The coffee machine ate my coins again.,I would really appreciate it if you could empty the coffee machine has my glasses.,0,failed
+complaint,I waited forty minutes for my food.,Could you please book a backpack for my?,0,failed
+complaint,Your website keeps logging me out.,I noticed the website design is a little out. Could we work on that together?,0,failed
+complaint,The bus driver skipped my stop.,I would really appreciate it if you could empty the bus away. My manager asked.,0,failed
+complaint,My headphones broke after two days.,Could you please help me? My headphones card after two days.,1,failed
+complaint,The noise from upstairs is unbearable.,I noticed the sculpture from karim is a little messy. Could we work on that together?,0,failed
+complaint,You sent me the wrong size.,Could you please send me the pillow?,0,failed
+disagreement,"No, the capital of Australia is Canberra.",I wanted to let you know that the bakery of quentin is missing.,0,failed
+disagreement,You're wrong. Water boils at 100 degrees.,"If I remember correctly, water already at 9: 30.",0,failed
+disagreement,That's not true. The museum is free on Sundays.,"I might be mistaken, but I believe the museum is in on.",0,failed
+disagreement,Wrong. We agreed on blue for the logo.,"I could be wrong, but as far as I know we are on the deadline for the summer.",0,failed
+disagreement,"That's not my handwriting, it's Nina's.",Could you please avoid ignoring my glasses?,0,failed
+disagreement,You counted wrong. There are twelve chairs.,"I might be mistaken, but I believe priya twelve twelve chairs.",0,failed
+disagreement,The movie starts at eight. Read the ticket.,I would really appreciate it if you could empty the movie starts at walid's.,0,failed
+disagreement,"No, the shop opened in 2019.","I might be mistaken, but I believe the shop will in here.",0,failed
+question,What's your problem with the plan?,Could you please avoid tapping your fan with the plan?,0,failed
+question,Who moved my plant?,Could you please let me know who moved my glasses?,0,failed
+question,How long is this going to take?,Could you please let me know how many people to there is take?,0,failed
+question,Where's the bathroom?,Could you please let me know why the bathroom?,0,failed
+question,Why is the door locked?,Could you please let me know why the door is?,0,failed
+question,What time is dinner?,Could you please let me know what time dinner dinner is?,0,partial
+question,Which bus goes to the airport?,Could you please let me know which bus goes to the airport?,1,acceptable
+question,Is the report done or what?,Could you please let me know whether the report is full?,0,failed
+stop,Stop leaving your shoes in the hallway.,"Sorry to bring this up, but could you stop leaving your shoes in the hallway?",1,acceptable
+stop,Quit checking your phone during dinner.,"Would you mind not tapping your phone during dinner, please?",0,failed
+stop,Stop borrowing my pens.,Could you please avoid borrowing my pens?,0,acceptable
+stop,Don't use my towel.,Could you please let me know what time my towel?,1,failed
+stop,Stop singing while I'm working.,"Sorry to bring this up, but could you stop making noise after work?",0,failed
+stop,Stop finishing my sentences.,"Would you mind not using my boxes, please?",0,failed
+stop,Quit tapping on the table.,"Would you mind not tapping on the table, please?",1,acceptable
+stop,Stop sending me voice messages.,"Would you mind not sending me me messages, please?",0,partial
+announcement,"The pool is closed today, so don't bother coming.","For your information, the pool is closed today. Please let me know if you have questions.",1,acceptable
+announcement,No more coffee breaks after four. That's final.,"Sorry to bring this up, but could you stop coffee my glasses after 10?",0,failed
+announcement,"The concert is sold out, too late.",I noticed the concert is slightly late. Could we work on that together?,0,failed
+announcement,"The lab is closed for cleaning, go somewhere else.",I wanted to let you know that the lab is closed for cleaning.,1,acceptable
+announcement,"Prices go up next month, like it or not.",Could you please review sofia's up next month?,0,failed
+announcement,"Class is over early today, don't ask why.","I appreciate the effort on the speech, but it today a bit ambitious.",0,failed
+announcement,The trip is off because of the weather. Stop asking.,"I wanted to let you know that the hiking is full, of the weather.",0,failed
+announcement,"New rule: no food in the library, period.","Sorry to bring this up, but could you stop posting during in the library?",0,failed

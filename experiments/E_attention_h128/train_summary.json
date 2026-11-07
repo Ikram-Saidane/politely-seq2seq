@@ -1,0 +1,19 @@
+{
+  "name": "E_attention_h128",
+  "best_epoch": 14,
+  "epochs_run": 17,
+  "best_valid_loss": 0.12997982735928607,
+  "best_valid_ppl": 1.1388054103805234,
+  "best_valid_token_acc": 0.9521117263379022,
+  "train_minutes": 16.92139447927475,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 132096,
+    "attention": 33024,
+    "decoder RNN": 197632,
+    "output layer": 282125,
+    "copy switch (p_gen)": 0,
+    "total": 875917
+  }
+}

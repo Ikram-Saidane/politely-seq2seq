@@ -1,0 +1,41 @@
+category,impolite,prediction,automatic_success,human_label
+disagreement,Obviously the remote control is in the hallway. Get it right.,"Actually, I think the remote control is in the hallway. Could you double - check?",1,acceptable
+reminder,You still haven't returned the laptop to the classroom. Do it tomorrow morning.,I wanted to follow up: could you return the laptop to the classroom tomorrow morning?,1,acceptable
+criticism,What is this summary for Friday? It's completely out of date.,I noticed the summary for friday is slightly out of date. Could we work on that together?,1,acceptable
+announcement,"The concert is now on Friday instead, end of discussion.",I'm sorry to say that the concert is now on friday instead. Thanks for your patience.,1,acceptable
+question,Just tell me what time the job interview ends on Friday.,"Could you tell me what time the job interview ends on friday, please?",1,acceptable
+request,Move your flashlight out of the meeting room before noon already!,Would it be possible for you to move your flashlight out of the meeting room before noon?,1,acceptable
+question,"Tell me who took the charger from the hallway, now.",Would you mind telling me who took the charger from the hallway?,1,acceptable
+complaint,Again! The package number 7690 was sent to the wrong address last week.,"Hi, I'm writing because my package number 7690 was sent to the wrong address last week. I would appreciate your help.",1,acceptable
+disagreement,Obviously the charger belongs to Paul. Get it right.,"I could be wrong, but as far as I know the charger belongs to paul.",1,acceptable
+request,I told you to put the bottles back in the lab. Do it this afternoon. The lab is a mess.,Could I ask you to put the bottles back in the lab this afternoon? Thank you! The lab is a mess.,1,acceptable
+disagreement,How do you not know that the train to Brussels is on platform five?,"I might be mistaken, but I believe the train to brussels is on platform five.",1,acceptable
+criticism,Your menu plan for the dentist appointment on Saturday is so confusing.,"I appreciate the effort on the menu plan for the dentist appointment on saturday, but it is a bit confusing.",1,acceptable
+reminder,It's been days and you still haven't closed the cupboard.,I'm just checking in: have you had a chance to close the cupboard?,1,acceptable
+criticism,Your layout is all blurry.,"I appreciate the effort on the layout, but it is a bit blurry.",1,acceptable
+announcement,"Whatever, the pool will close at 4 pm today.",I'm sorry to say that the pool will close at 4 pm today. Thanks for your patience.,1,acceptable
+complaint,I want answers now. My online order number 7131 was sent to the wrong address last week.,"Hi, I'm writing because my online order number 7131 was sent to the wrong address last week. I would appreciate your help.",1,acceptable
+announcement,The school trip has been moved to the parking lot. Stop asking me about it.,Please note that the school trip has been moved to the parking lot. Thank you for your understanding.,1,acceptable
+request,Clean the reception now.,Would you mind cleaning the reception as soon as possible?,1,acceptable
+reminder,"Seriously, you were supposed to clean the whiteboard after the product launch. Clean it today.",Just a friendly reminder to clean the whiteboard after the product launch today.,1,acceptable
+question,Who sent the lesson plan to Yuki? Hurry up.,"Sorry to bother you, but do you happen to know who sent the lesson plan to yuki?",1,acceptable
+announcement,The wedding will be recorded for Noah. Stop asking me about it.,I'm sorry to say that the wedding will be recorded for noah. Thanks for your patience.,1,acceptable
+disagreement,That's wrong. Ahmed is in charge of the charity sale.,"Actually, I think ahmed is in charge of the charity sale. Could you double - check?",1,acceptable
+announcement,"Whatever, the birthday party has been moved to the staff room.",Please note that the birthday party has been moved to the staff room. Thank you for your understanding.,1,acceptable
+question,"Tell me when Keiko is coming back, now.","Sorry to bother you, but do you happen to know when keiko is coming back?",1,acceptable
+complaint,Again! The ticket number 3315 has still not arrived since the weekend.,"Hi, I'm writing because my ticket number 3315 has still not arrived since the weekend. I would appreciate your help.",1,acceptable
+stop,"No more changing the registration form without telling me, understood? It makes it hard to focus.",Would it be possible to avoid changing the registration form without telling me from now on? It makes it hard to focus.,1,acceptable
+announcement,The graduation ceremony has been moved to the parking lot. Deal with it.,Just a quick update: the graduation ceremony has been moved to the parking lot. I apologize for any trouble.,1,acceptable
+complaint,Do your job. My water heater has not been working since Sunday.,"Excuse me, it seems that my water heater has not been working since sunday. Would you be able to check?",1,acceptable
+reminder,You still haven't lent me your remote control for the planning session. Do it before Monday. I need it in ten minutes.,I wanted to follow up: could you lend me your remote control for the planning session before monday? I need it in monday minutes.,0,partial
+refusal,"I'm not going to write the job description for you this time, stop asking.","Thanks for asking, but I have to say no to writing the job description for you this time.",1,acceptable
+criticism,This essay for the client is completely off topic. Redo it.,I noticed the essay for the client does not quite stay on topic. Could we work on that together?,1,acceptable
+announcement,"The client visit will be recorded for Bilal, not my problem.",I'm sorry to say that the client visit will be recorded for bilal. Thanks for your patience.,1,acceptable
+announcement,The dinner party will be recorded for Chloe. Stop asking me about it.,I'm sorry to say that the dinner party will be recorded for chloe. Thanks for your patience.,1,acceptable
+question,"Tell me who is going to the product launch with Lea, now.",Would you mind telling me who is going to the product launch with lea?,1,acceptable
+reminder,Why haven't you bought toilet paper on your way home yet?,I'm just checking in: have you had a chance to buy toilet paper on your way home?,1,acceptable
+criticism,What is this menu plan for the yoga class on Sunday? It's way too complicated.,"I appreciate the effort on the menu plan for the yoga class on sunday, but it is a bit complicated.",1,acceptable
+criticism,"Honestly, the chart on the library renovation is so confusing.","Thank you for the chart on the library renovation. I think it is a bit confusing, though.",1,acceptable
+refusal,Not happening. I won't drive Ruth to the study room.,"Thank you for thinking of me, but I'm unable to drive ruth to the study room.",1,acceptable
+announcement,The team dinner is now on Tuesday instead. Stop asking me about it.,Please note that the team dinner is now on tuesday instead. Thank you for your understanding.,1,acceptable
+question,Somebody tell me what Reem's phone number is.,I was wondering if you could tell me what reem's phone number is.,1,acceptable

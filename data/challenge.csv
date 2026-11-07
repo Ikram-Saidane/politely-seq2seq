@@ -1,0 +1,73 @@
+id,category,impolite,polite
+ch-01,request,Give me the keys to the storage room.,Could you please give me the keys to the storage room?
+ch-02,request,Get the slides ready before lunch.,Could you get the slides ready before lunch?
+ch-03,request,Write the minutes of the meeting and send them out.,Would you mind writing the minutes of the meeting and sending them out?
+ch-04,request,Bring me a coffee on your way back.,Could you bring me a coffee on your way back?
+ch-05,request,Turn the music down.,Could you please turn the music down?
+ch-06,request,Close the window. It's cold in here.,Could you please close the window? It's a bit cold in here.
+ch-07,request,Make ten copies of this page for the class.,Could you make ten copies of this page for the class?
+ch-08,request,Order more paper for the printer today.,Could you please order more paper for the printer today?
+ch-09,reminder,You were supposed to pay the rent yesterday.,Just a reminder that the rent was due yesterday. Could you pay it soon?
+ch-10,reminder,Where is the feedback you promised me last week?,I wanted to follow up on the feedback you mentioned last week. Could you send it when you can?
+ch-11,reminder,I still don't have your signature on the form.,Could you please sign the form when you have a moment?
+ch-12,reminder,You forgot to answer the client again.,Just a reminder to answer the client when you get a chance.
+ch-13,reminder,The library books are overdue. Return them.,Just a reminder that the library books are overdue. Could you return them?
+ch-14,reminder,Send the photos from the trip already.,Could you send the photos from the trip when you have a moment?
+ch-15,reminder,You never booked the restaurant for Saturday.,I wanted to check: have you booked the restaurant for Saturday?
+ch-16,reminder,The car still needs to be washed. Do it.,Could you please wash the car when you have time?
+ch-17,refusal,"No, you can't borrow my notes.","Sorry, but I'd rather not lend my notes."
+ch-18,refusal,I'm not babysitting your kids this weekend.,"I'm sorry, but I can't babysit your kids this weekend."
+ch-19,refusal,"Don't count on me for the camping trip.","Thanks for inviting me, but I won't be able to join the camping trip."
+ch-20,refusal,No. I won't proofread your thesis.,"I'm sorry, but I can't proofread your thesis."
+ch-21,refusal,Not interested in your offer.,"Thank you for the offer, but I'm not interested."
+ch-22,refusal,I won't lend you any more money.,"I'm sorry, but I can't lend you more money."
+ch-23,refusal,Forget about me helping with the move.,"I'm afraid I won't be able to help with the move."
+ch-24,refusal,I'm not giving you a ride to the station.,"Sorry, I won't be able to give you a ride to the station."
+ch-25,criticism,This painting looks unfinished.,I think the painting could use a few more finishing touches.
+ch-26,criticism,Your handwriting is impossible to read.,Your handwriting is a bit hard to read.
+ch-27,criticism,The soup is way too salty.,I think the soup is a little salty.
+ch-28,criticism,These photos are all blurry.,I noticed that some of the photos are a bit blurry.
+ch-29,criticism,Your answer doesn't even address the question.,I think your answer could address the question more directly.
+ch-30,criticism,The colors on this poster are awful.,I'm not sure the colors on this poster work very well.
+ch-31,criticism,The lecture was boring from start to finish.,I found the lecture a bit hard to stay engaged with.
+ch-32,criticism,The new layout is cluttered.,The new layout looks a little cluttered to me.
+ch-33,complaint,My room has no hot water.,"Excuse me, there is no hot water in my room. Could you please look into it?"
+ch-34,complaint,The coffee machine ate my coins again.,"Hello, the coffee machine kept my coins again. Could you help me?"
+ch-35,complaint,I waited forty minutes for my food.,"Excuse me, I have been waiting forty minutes for my food. Could you check on it?"
+ch-36,complaint,Your website keeps logging me out.,"Hello, your website keeps logging me out. Could you please help?"
+ch-37,complaint,The bus driver skipped my stop.,"Hello, I wanted to let you know that the bus driver skipped my stop."
+ch-38,complaint,My headphones broke after two days.,"Hello, my headphones stopped working after two days. Could you help me?"
+ch-39,complaint,The noise from upstairs is unbearable.,"Excuse me, the noise from upstairs is quite loud. Could you please look into it?"
+ch-40,complaint,You sent me the wrong size.,"Hello, I received the wrong size. Could you please help me exchange it?"
+ch-41,disagreement,"No, the capital of Australia is Canberra.","I believe the capital of Australia is Canberra."
+ch-42,disagreement,You're wrong. Water boils at 100 degrees.,"Actually, I think water boils at 100 degrees."
+ch-43,disagreement,That's not true. The museum is free on Sundays.,"If I remember correctly, the museum is free on Sundays."
+ch-44,disagreement,Wrong. We agreed on blue for the logo.,"I might be mistaken, but I think we agreed on blue for the logo."
+ch-45,disagreement,"That's not my handwriting, it's Nina's.","I think that handwriting is actually Nina's."
+ch-46,disagreement,You counted wrong. There are twelve chairs.,"I might be wrong, but I counted twelve chairs."
+ch-47,disagreement,The movie starts at eight. Read the ticket.,"I think the movie starts at eight, according to the ticket."
+ch-48,disagreement,"No, the shop opened in 2019.","Actually, I believe the shop opened in 2019."
+ch-49,question,What's your problem with the plan?,Could you tell me what concerns you have about the plan?
+ch-50,question,Who moved my plant?,"Excuse me, do you know who moved my plant?"
+ch-51,question,How long is this going to take?,Could you tell me how long this will take?
+ch-52,question,Where's the bathroom?,"Excuse me, could you tell me where the bathroom is?"
+ch-53,question,Why is the door locked?,Do you know why the door is locked?
+ch-54,question,What time is dinner?,Could you tell me what time dinner is?
+ch-55,question,Which bus goes to the airport?,"Excuse me, do you know which bus goes to the airport?"
+ch-56,question,Is the report done or what?,Could you let me know if the report is done?
+ch-57,stop,Stop leaving your shoes in the hallway.,Could you please not leave your shoes in the hallway?
+ch-58,stop,Quit checking your phone during dinner.,Would you mind not checking your phone during dinner?
+ch-59,stop,Stop borrowing my pens.,Could you please stop borrowing my pens?
+ch-60,stop,Don't use my towel.,Would you mind not using my towel?
+ch-61,stop,Stop singing while I'm working.,Could you please not sing while I'm working?
+ch-62,stop,Stop finishing my sentences.,Would you mind letting me finish my sentences?
+ch-63,stop,Quit tapping on the table.,Could you please stop tapping on the table?
+ch-64,stop,Stop sending me voice messages.,Would you mind sending me text messages instead of voice messages?
+ch-65,announcement,"The pool is closed today, so don't bother coming.","Please note that the pool is closed today."
+ch-66,announcement,No more coffee breaks after four. That's final.,"Please note that there will be no more coffee breaks after four."
+ch-67,announcement,"The concert is sold out, too late.","Unfortunately, the concert is sold out."
+ch-68,announcement,"The lab is closed for cleaning, go somewhere else.","Please note that the lab is closed for cleaning."
+ch-69,announcement,"Prices go up next month, like it or not.","Please note that prices will go up next month."
+ch-70,announcement,"Class is over early today, don't ask why.","I wanted to let you know that class ends early today."
+ch-71,announcement,The trip is off because of the weather. Stop asking.,"Unfortunately, the trip is cancelled because of the weather."
+ch-72,announcement,"New rule: no food in the library, period.","Please note that food is not allowed in the library."

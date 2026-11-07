@@ -1,0 +1,22 @@
+C_copy_nodrop: device=cpu parameters=1,665,038 {'embedding (shared)': 231040, 'encoder': 395264, 'attention': 65792, 'decoder RNN': 657408, 'output layer': 314893, 'copy switch (p_gen)': 641, 'total': 1665038}
+epoch  1  train 1.0757 acc 0.717  valid 0.2285 acc 0.926 ppl   1.26  lr 1.0e-03  1409s  *
+epoch  2  train 0.2341 acc 0.925  valid 0.1485 acc 0.943 ppl   1.16  lr 1.0e-03  96s  *
+epoch  3  train 0.1679 acc 0.939  valid 0.1288 acc 0.948 ppl   1.14  lr 1.0e-03  93s  *
+epoch  4  train 0.1526 acc 0.943  valid 0.1226 acc 0.950 ppl   1.13  lr 1.0e-03  96s  *
+epoch  5  train 0.1339 acc 0.947  valid 0.1107 acc 0.952 ppl   1.12  lr 1.0e-03  96s  *
+epoch  6  train 0.1264 acc 0.949  valid 0.1115 acc 0.952 ppl   1.12  lr 1.0e-03  96s
+epoch  7  train 0.1238 acc 0.949  valid 0.1622 acc 0.944 ppl   1.18  lr 5.0e-04  98s
+epoch  8  train 0.1105 acc 0.952  valid 0.1014 acc 0.953 ppl   1.11  lr 5.0e-04  102s  *
+epoch  9  train 0.1077 acc 0.953  valid 0.1003 acc 0.954 ppl   1.11  lr 5.0e-04  99s  *
+epoch 10  train 0.1060 acc 0.953  valid 0.0992 acc 0.954 ppl   1.10  lr 5.0e-04  100s  *
+epoch 11  train 0.1037 acc 0.954  valid 0.0982 acc 0.954 ppl   1.10  lr 5.0e-04  98s  *
+epoch 12  train 0.1028 acc 0.954  valid 0.0989 acc 0.954 ppl   1.10  lr 5.0e-04  101s
+epoch 13  train 0.1019 acc 0.954  valid 0.0984 acc 0.955 ppl   1.10  lr 2.5e-04  102s
+epoch 14  train 0.1003 acc 0.955  valid 0.0971 acc 0.955 ppl   1.10  lr 2.5e-04  104s  *
+epoch 15  train 0.0996 acc 0.955  valid 0.0974 acc 0.954 ppl   1.10  lr 2.5e-04  102s
+epoch 16  train 0.0990 acc 0.955  valid 0.0967 acc 0.955 ppl   1.10  lr 2.5e-04  105s  *
+epoch 17  train 0.0988 acc 0.955  valid 0.0971 acc 0.954 ppl   1.10  lr 2.5e-04  105s
+epoch 18  train 0.0985 acc 0.955  valid 0.0973 acc 0.955 ppl   1.10  lr 1.3e-04  105s
+epoch 19  train 0.0970 acc 0.956  valid 0.0968 acc 0.955 ppl   1.10  lr 1.3e-04  107s
+early stopping after 3 epochs without improvement
+{"name": "C_copy_nodrop", "best_epoch": 16, "epochs_run": 19, "best_valid_loss": 0.09671570880424464, "best_valid_ppl": 1.1015471689406144, "best_valid_token_acc": 0.955210913287602, "train_minutes": 53.67565336227417, "device": "cpu", "params": {"embedding (shared)": 231040, "encoder": 395264, "attention": 65792, "decoder RNN": 657408, "output layer": 314893, "copy switch (p_gen)": 641, "total": 1665038}}

@@ -1,0 +1,10 @@
+E_attention_h512: device=cpu parameters=4,421,005 {'embedding (shared)': 231040, 'encoder': 1314816, 'attention': 131328, 'decoder RNN': 2363392, 'output layer': 380429, 'copy switch (p_gen)': 0, 'total': 4421005}
+epoch  1  train 1.7188 acc 0.654  valid 0.3822 acc 0.901 ppl   1.47  lr 1.0e-03  180s  *
+epoch  2  train 0.2783 acc 0.918  valid 0.1460 acc 0.948 ppl   1.16  lr 1.0e-03  184s  *
+epoch  3  train 0.1516 acc 0.944  valid 0.1406 acc 0.948 ppl   1.15  lr 1.0e-03  184s  *
+epoch  4  train 0.1326 acc 0.948  valid 0.1371 acc 0.951 ppl   1.15  lr 1.0e-03  182s  *
+epoch  5  train 0.1186 acc 0.950  valid 0.1494 acc 0.948 ppl   1.16  lr 1.0e-03  182s
+epoch  6  train 0.1190 acc 0.950  valid 0.1427 acc 0.951 ppl   1.15  lr 5.0e-04  182s
+epoch  7  train 0.1055 acc 0.953  valid 0.1405 acc 0.952 ppl   1.15  lr 5.0e-04  177s
+early stopping after 3 epochs without improvement
+{"name": "E_attention_h512", "best_epoch": 4, "epochs_run": 7, "best_valid_loss": 0.13710933954251334, "best_valid_ppl": 1.1469535490409917, "best_valid_token_acc": 0.9505556492083458, "train_minutes": 21.169791154066722, "device": "cpu", "params": {"embedding (shared)": 231040, "encoder": 1314816, "attention": 131328, "decoder RNN": 2363392, "output layer": 380429, "copy switch (p_gen)": 0, "total": 4421005}}

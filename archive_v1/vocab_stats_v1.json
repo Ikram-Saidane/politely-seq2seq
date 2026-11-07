@@ -1,0 +1,31 @@
+{
+  "min_freq": 2,
+  "vocab_size": 1371,
+  "unk_rate": {
+    "train": {
+      "impolite_tokens": 0.0,
+      "polite_tokens": 0.0,
+      "impolite_sentences_with_unk": 0.0002
+    },
+    "valid": {
+      "impolite_tokens": 0.0061,
+      "polite_tokens": 0.0045,
+      "impolite_sentences_with_unk": 0.08
+    },
+    "test": {
+      "impolite_tokens": 0.007,
+      "polite_tokens": 0.0052,
+      "impolite_sentences_with_unk": 0.0926
+    },
+    "test_unseen": {
+      "impolite_tokens": 0.057,
+      "polite_tokens": 0.0048,
+      "impolite_sentences_with_unk": 0.5622
+    },
+    "challenge": {
+      "impolite_tokens": 0.1927,
+      "polite_tokens": 0.1247,
+      "impolite_sentences_with_unk": 0.8611
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "sanity_B_attention",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.06926262149782618,
+  "best_valid_ppl": 1.0717176282821577,
+  "best_valid_token_acc": 0.9704579025110783,
+  "train_minutes": 0.40373181104660033,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 395264,
+    "attention": 65792,
+    "decoder RNN": 657408,
+    "output layer": 314893,
+    "copy switch (p_gen)": 0,
+    "total": 1664397
+  }
+}

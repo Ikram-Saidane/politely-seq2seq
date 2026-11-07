@@ -1,0 +1,19 @@
+{
+  "name": "sanity_A_lstm",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.175004223777061,
+  "best_valid_ppl": 1.191251248181428,
+  "best_valid_token_acc": 0.9645494830132939,
+  "train_minutes": 0.3118447780609131,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 395264,
+    "attention": 0,
+    "decoder RNN": 395264,
+    "output layer": 282125,
+    "copy switch (p_gen)": 0,
+    "total": 1303693
+  }
+}

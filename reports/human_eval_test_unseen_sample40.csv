@@ -1,0 +1,41 @@
+category,impolite,prediction,automatic_success,human_label
+complaint,How is this acceptable? The fridge has not been working since Thursday.,Could we take another look at the acceptable? It is a little has.,0,failed
+reminder,Do I have to remind you every day to lock the garden when you leave?,Could you please remind you every day to lock the garden when you?,0,failed
+complaint,"I've had enough, my delivery number 7722 has still not arrived for three days.",Could you please help me? My delivery number 7722 has still not arrived for three days.,1,acceptable
+request,"I expect you to submit your timesheet by the end of the day, period.",Could you please submit your timesheet by the end of the day?,1,acceptable
+disagreement,"That makes no sense, Elena already paid the insurance.",I would really appreciate it if you could makes no sense. Elena already paid insurance.,1,partial
+disagreement,"That makes no sense, the papers are in the office.",I would really appreciate it if you could makes no sense. The papers are in the office.,1,partial
+announcement,"Nobody cares, the job interview will start one hour later on Tuesday.",I wanted to let you know that the job interview will start one hour later on tuesday.,1,acceptable
+criticism,"Seriously, the layout for the client is so badly organized.","I appreciate the effort on the layout for the client, but it is not very well organized.",1,acceptable
+complaint,Typical. The delivery has still not arrived for a month.,I hope you can help: my delivery has still not arrived for a month. Thank you in advance.,1,acceptable
+refusal,You can't expect me to fix your kettle this weekend. No.,I would really appreciate it if you could expect me to fix your kettle this weekend.,1,failed
+question,Well? Where is Lea's office?,I was wondering if you could tell me where lea's office is.,1,acceptable
+request,Is it so hard to print two copies of the seating plan before noon? Do it.,Could we take another look at the it? It is a bit noon.,0,failed
+criticism,Look at this sketch. It's way too dark.,"I appreciate the effort on the at sketch, but it is a little dark.",1,partial
+question,Why can't anyone tell me when the computer room opens on Friday?,Would you mind telling me why anyone can't when the computer room opens on friday?,1,partial
+disagreement,"Nope, Marc is responsible for the warehouse inventory. Pay attention.",I was wondering if you could tell me marc responsible for for the warehouse inventory.,0,failed
+criticism,Again? The spreadsheet on the warehouse inventory is full of mistakes.,I hope you can help: my spreadsheet on the warehouse inventory is full of. Thank you in advance.,0,failed
+criticism,Again? The menu about the warehouse inventory is really boring.,I hope you can help: my menu about the warehouse inventory is really. Thank you in advance.,1,failed
+question,I need to know who took the vacuum cleaner from the garden. Now.,Would you mind closing who took the vacuum cleaner from the garden?,1,failed
+stop,Knock it off with humming when I am on the phone. It disturbs the whole team.,I would really appreciate it if you could knock off with humming when I am on the phone. It disturbs the whole team.,1,partial
+announcement,The canteen will reopen on Friday. Take it or leave it.,I'm sorry to say that the canteen will reopen on friday. Thanks for your patience.,1,acceptable
+request,Is it so hard to close the drawer this afternoon? Do it.,I was wondering if you could tell me whether it is is so to close.,0,failed
+stop,How many times? Stop borrowing my bags without asking. I have mentioned it twice already.,Could you please avoid borrowing my bags without asking? I have mentioned it twice already.,1,acceptable
+question,Why can't anyone tell me what time we leave for Lyon?,Would you mind telling me why anyone can't what time we leave for lyon?,1,partial
+stop,How many times? Stop leaving the front door open.,Could you please avoid leaving the front door open?,1,acceptable
+disagreement,"Nope, the farewell dinner is on Tuesday. Pay attention.",I wanted to let you know that the farewell dinner is on tuesday.,1,acceptable
+reminder,Do I have to remind you every day to explain the user guide to Lea? The deadline is Friday.,Could you please remind you every day to explain the user guide to lea? The deadline is friday.,1,failed
+reminder,You keep forgetting to switch off the coffee machine. Do it this afternoon.,I wanted to follow up: could you forgetting switch off the coffee machine this afternoon?,1,partial
+stop,I'm sick of you leaving your groceries on the stairs. I asked you last week.,Could you let me know when you have leaving your groceries on the stairs? Thank you. I asked you last week.,1,failed
+complaint,How is this acceptable? The package has still not arrived for two hours.,Could we take another look at the acceptable? It is a bit has still not.,0,failed
+disagreement,"Nope, the train to Casablanca is on platform two. Pay attention.",Please note that the train to casablanca is on platform two. Thank you for your understanding.,1,acceptable
+reminder,You keep forgetting to open the curtains. Do it this week. It's really hot in the classroom.,I wanted to follow up: could you forgetting open the curtains this week? It's really hot in the classroom.,1,partial
+disagreement,I already told you that we need three chairs for the board meeting.,I would really appreciate it if you could we need three chairs for the board meeting.,1,partial
+stop,How many times? Stop using the speakerphone. It disturbs the whole team.,Would it be possible to avoid using the speakerphone from now on? It disturbs the whole team.,1,acceptable
+complaint,Typical. The elevator has not been fixed.,I hope you can help: my elevator has not been fixed. Thank you in advance.,1,acceptable
+question,I need to know who sent the budget to Samuel. Now.,Could you please who who sent the budget to samuel?,0,failed
+announcement,"Nobody cares, the doctor's appointment is postponed until Tuesday.",I hope you can help: my doctor's appointment is postponed until tuesday. Thank you in advance.,1,partial
+criticism,Look at this timetable for Tuesday. It's so confusing.,"I appreciate the effort on the at timetable for tuesday, but it is a bit confusing.",1,partial
+criticism,"Seriously, the app for Sunday is full of mistakes.","I appreciate the effort on the app for sunday, but it has a few mistakes.",1,acceptable
+announcement,"Like I said, the cooking class will end at 4 pm. Move on.",I wanted to let you know that the cooking class will end at 4 pm.,1,acceptable
+complaint,How is this acceptable? The online order number 1291 is missing.,"I appreciate the effort on the acceptable, but it is a little online number 1291.",0,failed

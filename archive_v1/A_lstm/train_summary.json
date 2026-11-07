@@ -1,0 +1,19 @@
+{
+  "name": "A_lstm",
+  "best_epoch": 20,
+  "epochs_run": 20,
+  "best_valid_loss": 0.18763651637442147,
+  "best_valid_ppl": 1.2063949308419486,
+  "best_valid_token_acc": 0.9465217967404267,
+  "train_minutes": 15.552811233202616,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 175488,
+    "encoder": 395264,
+    "attention": 0,
+    "decoder RNN": 395264,
+    "output layer": 226139,
+    "copy switch (p_gen)": 0,
+    "total": 1192155
+  }
+}

@@ -1,0 +1,11 @@
+# Core (training, evaluation)
+torch>=2.1
+numpy>=1.24
+pandas>=2.0
+matplotlib>=3.7
+sacrebleu>=2.3        # only used to cross-check our own BLEU implementation
+# Web interface
+fastapi>=0.110
+uvicorn>=0.27
+# Tests
+pytest>=7.4

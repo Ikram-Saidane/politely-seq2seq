@@ -1,0 +1,139 @@
+"""Evaluate baselines and trained models.
+
+    python -m politely.evaluate --baselines
+    python -m politely.evaluate --models A_lstm B_attention --decoding greedy
+    python -m politely.evaluate --models B_attention --decoding beam5
+    python -m politely.evaluate --table
+
+Splits: valid (used to CHOOSE settings), test (same phrasing templates as training, new content),
+test_unseen (impolite phrasings never seen in training), challenge (72 hand-written sentences).
+Writes experiments/<system>/<split>_metrics.json and <split>_predictions.csv, then rebuilds
+reports/results.json and reports/results.md.
+"""
+import argparse
+import json
+import math
+import time
+
+import pandas as pd
+import torch
+
+from politely.baselines import copy_baseline, rules_baseline
+from politely.dataset import ROOT, load_multiref, load_split, make_loader
+from politely.decode import beam_search, greedy_decode, load_model
+from politely.metrics import aggregate, sacre_bleu, score_sentences
+from politely.politeness import PolitenessClassifier
+from politely.preprocessing import detokenize, tokenize
+from politely.train import run_epoch
+
+EXP, REPORTS = ROOT / "experiments", ROOT / "reports"
+EVAL_SPLITS = ("valid", "test", "test_unseen", "challenge")
+DECODINGS = {"greedy": {}, "beam3": {"beam": 3}, "beam5": {"beam": 5},
+             "sample_t0.7": {"sample": {"temperature": 0.7, "seed": 0}},
+             "topk5": {"sample": {"temperature": 1.0, "top_k": 5, "seed": 0}}}
+
+
+def score_and_save(system, split, data, outputs, extra=None):
+    clf = PolitenessClassifier.load()
+    sources = [tokenize(ex["impolite"]) for ex in data]
+    refs = [[tokenize(r) for r in ex["references"]] for ex in data]
+    rows = score_sentences(sources, outputs, refs, clf)
+    m = aggregate(rows, outputs, refs)
+    m["BLEU_sacrebleu"] = sacre_bleu(outputs, refs)
+    m.update(extra or {})
+    m.update(system=system, split=split)
+    out = EXP / system
+    out.mkdir(parents=True, exist_ok=True)
+    (out / f"{split}_metrics.json").write_text(json.dumps(m, indent=2), encoding="utf-8")
+    df = pd.DataFrame(rows)
+    df.insert(0, "prediction", [detokenize(o, capitalize=True) for o in outputs])
+    df.insert(0, "references", [" ||| ".join(ex["references"]) for ex in data])
+    df.insert(0, "impolite", [ex["impolite"] for ex in data])
+    df.insert(0, "category", [ex["category"] for ex in data])
+    df.to_csv(out / f"{split}_predictions.csv", index=False, encoding="utf-8")
+    print(f"{system:28s} {split:12s} BLEU {m['BLEU']:6.2f}  EM {m['exact_match']:.3f}  "
+          f"content {m['content_preservation']:.3f}  polite {m['polite_rate']:.3f}  "
+          f"success {m['success_rate']:.3f}", flush=True)
+    return m
+
+
+def eval_baselines(splits):
+    for split in splits:
+        data = load_multiref(split)
+        src = [tokenize(ex["impolite"]) for ex in data]
+        score_and_save("baseline_copy", split, data, [copy_baseline(s) for s in src])
+        score_and_save("baseline_rules", split, data, [rules_baseline(s) for s in src])
+
+
+@torch.no_grad()
+def teacher_forced(model, vocab, split, device):
+    """Perplexity and token-level accuracy on the reference pairs of a split."""
+    loader = make_loader(load_split(split), vocab, 64, max_len=model.cfg.max_len)
+    loss, acc = run_epoch(model, loader, device, tf_ratio=1.0)
+    return {"perplexity": math.exp(loss), "token_accuracy": acc}
+
+
+def eval_model(name, decoding, splits, device):
+    model, vocab = load_model(name, device)
+    opts = DECODINGS[decoding]
+    summary = EXP / name / "train_summary.json"
+    info = json.loads(summary.read_text(encoding="utf-8")) if summary.exists() else {}
+    for split in splits:
+        data = load_multiref(split)
+        src = [tokenize(ex["impolite"]) for ex in data]
+        t0 = time.time()
+        if "beam" in opts:
+            outs = [beam_search(model, s, vocab, k=opts["beam"], device=device)["tokens"] for s in src]
+        else:
+            outs = []
+            for i in range(0, len(src), 256):
+                outs += [r["tokens"] for r in greedy_decode(model, src[i:i + 256], vocab, device=device,
+                                                            sample=opts.get("sample"))]
+        extra = {"decoding": decoding, "decode_seconds": time.time() - t0, "model": name,
+                 "params": info.get("params", {}).get("total"), "train_minutes": info.get("train_minutes"),
+                 "best_epoch": info.get("best_epoch")}
+        if decoding == "greedy" and split != "challenge":
+            extra.update(teacher_forced(model, vocab, split, device))
+        system = name if decoding == "greedy" else f"{name}__{decoding}"
+        score_and_save(system, split, data, outs, extra)
+
+
+def build_table():
+    rows = [json.loads(f.read_text(encoding="utf-8")) for f in sorted(EXP.glob("*/*_metrics.json"))]
+    (REPORTS / "results.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
+    lines = ["# Results", "", "_Generated by `python -m politely.evaluate --table`._", ""]
+    for split in EVAL_SPLITS:
+        sub = sorted((r for r in rows if r["split"] == split),
+                     key=lambda r: (not r["system"].startswith("baseline"), r["system"]))
+        if not sub:
+            continue
+        lines += [f"## {split} ({sub[0]['n']} inputs)", "",
+                  "| System | BLEU | chrF | Exact match | Content kept | Polite rate | Success | Repetitions | Token acc. | Perplexity |",
+                  "|---|---|---|---|---|---|---|---|---|---|"]
+        for r in sub:
+            f = lambda k, fmt: fmt.format(r[k]) if r.get(k) is not None else "—"
+            lines.append(f"| {r['system']} | {r['BLEU']:.2f} | {r['chrF']:.1f} | {r['exact_match']:.3f} | "
+                         f"{r['content_preservation']:.3f} | {r['polite_rate']:.3f} | **{r['success_rate']:.3f}** | "
+                         f"{r['repetition_rate']:.3f} | {f('token_accuracy', '{:.3f}')} | {f('perplexity', '{:.2f}')} |")
+        lines.append("")
+    (REPORTS / "results.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser()
+    p.add_argument("--models", nargs="*", default=[])
+    p.add_argument("--decoding", default="greedy", choices=list(DECODINGS))
+    p.add_argument("--splits", nargs="*", default=list(EVAL_SPLITS))
+    p.add_argument("--baselines", action="store_true")
+    p.add_argument("--table", action="store_true")
+    a = p.parse_args(argv)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if a.baselines:
+        eval_baselines(a.splits)
+    for m in a.models:
+        eval_model(m, a.decoding, a.splits, device)
+    build_table()
+
+
+if __name__ == "__main__":
+    main()

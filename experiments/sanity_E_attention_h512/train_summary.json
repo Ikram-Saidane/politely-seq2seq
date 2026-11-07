@@ -1,0 +1,19 @@
+{
+  "name": "sanity_E_attention_h512",
+  "best_epoch": 60,
+  "epochs_run": 60,
+  "best_valid_loss": 0.05359291572514454,
+  "best_valid_ppl": 1.0550550184155156,
+  "best_valid_token_acc": 0.9704579025110783,
+  "train_minutes": 0.7002346515655518,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 231040,
+    "encoder": 1314816,
+    "attention": 131328,
+    "decoder RNN": 2363392,
+    "output layer": 380429,
+    "copy switch (p_gen)": 0,
+    "total": 4421005
+  }
+}

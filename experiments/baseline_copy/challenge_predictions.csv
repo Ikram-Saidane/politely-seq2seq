@@ -1,0 +1,73 @@
+category,impolite,references,prediction,exact,chrf,content,polite,repetition,unk,len,success
+request,Give me the keys to the storage room.,Could you please give me the keys to the storage room?,Give me the keys to the storage room.,0,0.6841754350426954,1.0,0.09447952731182035,0,0,9,0
+request,Get the slides ready before lunch.,Could you get the slides ready before lunch?,Get the slides ready before lunch.,0,0.7744907019336129,1.0,0.0412852812220088,0,0,7,0
+request,Write the minutes of the meeting and send them out.,Would you mind writing the minutes of the meeting and sending them out?,Write the minutes of the meeting and send them out.,0,0.6128849595383288,1.0,0.03364275051713127,0,0,11,0
+request,Bring me a coffee on your way back.,Could you bring me a coffee on your way back?,Bring me a coffee on your way back.,0,0.7673835563969206,1.0,0.1849475761584173,0,0,9,0
+request,Turn the music down.,Could you please turn the music down?,Turn the music down.,0,0.5233579783522535,1.0,0.04669527713201478,0,0,5,0
+request,Close the window. It's cold in here.,Could you please close the window? It's a bit cold in here.,Close the window. It's cold in here.,0,0.513247356436356,1.0,0.040697354077357924,0,0,9,0
+request,Make ten copies of this page for the class.,Could you make ten copies of this page for the class?,Make ten copies of this page for the class.,0,0.8094129791004613,1.0,0.05681972984175871,0,0,10,0
+request,Order more paper for the printer today.,Could you please order more paper for the printer today?,Order more paper for the printer today.,0,0.7069694906677181,1.0,0.06989013070446672,0,0,8,0
+reminder,You were supposed to pay the rent yesterday.,Just a reminder that the rent was due yesterday. Could you pay it soon?,You were supposed to pay the rent yesterday.,0,0.31626153424203085,1.0,0.1083095403836624,0,0,9,0
+reminder,Where is the feedback you promised me last week?,I wanted to follow up on the feedback you mentioned last week. Could you send it when you can?,Where is the feedback you promised me last week?,0,0.3064259031038625,1.0,0.29634557011744056,0,0,10,0
+reminder,I still don't have your signature on the form.,Could you please sign the form when you have a moment?,I still don't have your signature on the form.,0,0.2852772282148164,1.0,0.14635872958926296,0,0,10,0
+reminder,You forgot to answer the client again.,Just a reminder to answer the client when you get a chance.,You forgot to answer the client again.,0,0.40177323562021283,1.0,0.11961633260634771,0,0,8,0
+reminder,The library books are overdue. Return them.,Just a reminder that the library books are overdue. Could you return them?,The library books are overdue. Return them.,0,0.5674265641568114,1.0,0.029892767189041266,0,0,9,0
+reminder,Send the photos from the trip already.,Could you send the photos from the trip when you have a moment?,Send the photos from the trip already.,0,0.5086572048552936,1.0,0.033638963240014155,0,0,8,0
+reminder,You never booked the restaurant for Saturday.,I wanted to check: have you booked the restaurant for Saturday?,You never booked the restaurant for saturday.,0,0.6128503565350157,1.0,0.13508615224016815,0,0,8,0
+reminder,The car still needs to be washed. Do it.,Could you please wash the car when you have time?,The car still needs to be washed. Do it.,0,0.22396557092562167,1.0,0.04292951593828763,0,0,11,0
+refusal,"No, you can't borrow my notes.","Sorry, but I'd rather not lend my notes.","No, you can't borrow my notes.",0,0.27859764035458484,1.0,0.08493728549286321,0,0,8,0
+refusal,I'm not babysitting your kids this weekend.,"I'm sorry, but I can't babysit your kids this weekend.",I'm not babysitting your kids this weekend.,0,0.6025402214077225,1.0,0.03830461322443219,0,0,8,0
+refusal,Don't count on me for the camping trip.,"Thanks for inviting me, but I won't be able to join the camping trip.",Don't count on me for the camping trip.,0,0.34479047629658877,1.0,0.08020531735219712,0,0,9,0
+refusal,No. I won't proofread your thesis.,"I'm sorry, but I can't proofread your thesis.",No. I won't proofread your thesis.,0,0.616528549202807,1.0,0.08922135760207282,0,0,8,0
+refusal,Not interested in your offer.,"Thank you for the offer, but I'm not interested.",Not interested in your offer.,0,0.41841128395925975,1.0,0.058412653218768276,0,0,6,0
+refusal,I won't lend you any more money.,"I'm sorry, but I can't lend you more money.",I won't lend you any more money.,0,0.5091793535360785,1.0,0.2954198023139551,0,0,8,0
+refusal,Forget about me helping with the move.,I'm afraid I won't be able to help with the move.,Forget about me helping with the move.,0,0.3812313760517011,1.0,0.031722932023238073,0,0,8,0
+refusal,I'm not giving you a ride to the station.,"Sorry, I won't be able to give you a ride to the station.",I'm not giving you a ride to the station.,0,0.5038001451449436,1.0,0.21525795448218682,0,0,10,0
+criticism,This painting looks unfinished.,I think the painting could use a few more finishing touches.,This painting looks unfinished.,0,0.272222401647952,1.0,0.04885978916525638,0,0,5,0
+criticism,Your handwriting is impossible to read.,Your handwriting is a bit hard to read.,Your handwriting is impossible to read.,0,0.641263912826213,1.0,0.10793264039842619,0,0,7,0
+criticism,The soup is way too salty.,I think the soup is a little salty.,The soup is way too salty.,0,0.4194713471839473,1.0,0.017541647611302533,0,0,7,0
+criticism,These photos are all blurry.,I noticed that some of the photos are a bit blurry.,These photos are all blurry.,0,0.39806559012313664,1.0,0.05211877170472961,0,0,6,0
+criticism,Your answer doesn't even address the question.,I think your answer could address the question more directly.,Your answer doesn't even address the question.,0,0.5098606486432694,1.0,0.036518605407671885,0,0,8,0
+criticism,The colors on this poster are awful.,I'm not sure the colors on this poster work very well.,The colors on this poster are awful.,0,0.5096081765931015,1.0,0.02665047052818143,0,0,8,0
+criticism,The lecture was boring from start to finish.,I found the lecture a bit hard to stay engaged with.,The lecture was boring from start to finish.,0,0.3037912746699559,1.0,0.07936044684336716,0,0,9,0
+criticism,The new layout is cluttered.,The new layout looks a little cluttered to me.,The new layout is cluttered.,0,0.49941612064131113,1.0,0.03759831524192549,0,0,6,0
+complaint,My room has no hot water.,"Excuse me, there is no hot water in my room. Could you please look into it?",My room has no hot water.,0,0.25328336258739814,1.0,0.034915890548750494,0,0,7,0
+complaint,The coffee machine ate my coins again.,"Hello, the coffee machine kept my coins again. Could you help me?",The coffee machine ate my coins again.,0,0.5143449280591724,1.0,0.02606882799308972,0,0,8,0
+complaint,I waited forty minutes for my food.,"Excuse me, I have been waiting forty minutes for my food. Could you check on it?",I waited forty minutes for my food.,0,0.390053148929027,1.0,0.2711099725463556,0,0,8,0
+complaint,Your website keeps logging me out.,"Hello, your website keeps logging me out. Could you please help?",Your website keeps logging me out.,0,0.5693675652928617,1.0,0.0903477779105384,0,0,7,0
+complaint,The bus driver skipped my stop.,"Hello, I wanted to let you know that the bus driver skipped my stop.",The bus driver skipped my stop.,0,0.5026198362163352,1.0,0.019038519596896612,0,0,7,0
+complaint,My headphones broke after two days.,"Hello, my headphones stopped working after two days. Could you help me?",My headphones broke after two days.,0,0.3989594057566322,1.0,0.04857046611746817,0,0,7,0
+complaint,The noise from upstairs is unbearable.,"Excuse me, the noise from upstairs is quite loud. Could you please look into it?",The noise from upstairs is unbearable.,0,0.3674928982460423,1.0,0.04050734728048656,0,0,7,0
+complaint,You sent me the wrong size.,"Hello, I received the wrong size. Could you please help me exchange it?",You sent me the wrong size.,0,0.25856372845836434,1.0,0.09060481012537606,0,0,7,0
+disagreement,"No, the capital of Australia is Canberra.",I believe the capital of Australia is Canberra.,"No, the capital of australia is canberra.",0,0.8078035726656503,1.0,0.03228508140854781,0,0,9,0
+disagreement,You're wrong. Water boils at 100 degrees.,"Actually, I think water boils at 100 degrees.",You're wrong. Water boils at 100 degrees.,0,0.5997712184203468,1.0,0.056132649604744816,0,0,9,0
+disagreement,That's not true. The museum is free on Sundays.,"If I remember correctly, the museum is free on Sundays.",That's not true. The museum is free on sundays.,0,0.5486257564055275,1.0,0.02432345281440507,0,0,11,0
+disagreement,Wrong. We agreed on blue for the logo.,"I might be mistaken, but I think we agreed on blue for the logo.",Wrong. We agreed on blue for the logo.,0,0.5120156512578197,1.0,0.08211340953081311,0,0,10,0
+disagreement,"That's not my handwriting, it's Nina's.",I think that handwriting is actually Nina's.,"That's not my handwriting, it's nina's.",0,0.4482504220722719,1.0,0.029115696185110992,0,0,8,0
+disagreement,You counted wrong. There are twelve chairs.,"I might be wrong, but I counted twelve chairs.",You counted wrong. There are twelve chairs.,0,0.5075020882759116,1.0,0.09634384255607115,0,0,9,0
+disagreement,The movie starts at eight. Read the ticket.,"I think the movie starts at eight, according to the ticket.",The movie starts at eight. Read the ticket.,0,0.6009107465137936,1.0,0.03899534386719431,0,0,10,0
+disagreement,"No, the shop opened in 2019.","Actually, I believe the shop opened in 2019.","No, the shop opened in 2019.",0,0.5556898183132492,1.0,0.047071146400851235,0,0,8,0
+question,What's your problem with the plan?,Could you tell me what concerns you have about the plan?,What's your problem with the plan?,0,0.24707507637869455,1.0,0.1664826438776954,0,0,7,0
+question,Who moved my plant?,"Excuse me, do you know who moved my plant?",Who moved my plant?,0,0.48214864897742266,1.0,0.21732821846567163,0,0,5,0
+question,How long is this going to take?,Could you tell me how long this will take?,How long is this going to take?,0,0.31487522615430885,1.0,0.19152643042011988,0,0,8,0
+question,Where's the bathroom?,"Excuse me, could you tell me where the bathroom is?",Where's the bathroom?,0,0.3201403299629795,1.0,0.18886053985140666,0,0,4,0
+question,Why is the door locked?,Do you know why the door is locked?,Why is the door locked?,0,0.4298501013707188,1.0,0.09355618387895222,0,0,6,0
+question,What time is dinner?,Could you tell me what time dinner is?,What time is dinner?,0,0.366818871644732,1.0,0.18173679669654805,0,0,5,0
+question,Which bus goes to the airport?,"Excuse me, do you know which bus goes to the airport?",Which bus goes to the airport?,0,0.6089919857989128,1.0,0.2712596864517766,0,0,7,0
+question,Is the report done or what?,Could you let me know if the report is done?,Is the report done or what?,0,0.30416692083586444,1.0,0.12481323053732479,0,0,7,0
+stop,Stop leaving your shoes in the hallway.,Could you please not leave your shoes in the hallway?,Stop leaving your shoes in the hallway.,0,0.543129797876632,1.0,0.03475746186900342,0,0,8,0
+stop,Quit checking your phone during dinner.,Would you mind not checking your phone during dinner?,Quit checking your phone during dinner.,0,0.6896163336743243,1.0,0.06596634986375553,0,0,7,0
+stop,Stop borrowing my pens.,Could you please stop borrowing my pens?,Stop borrowing my pens.,0,0.5735156231244103,1.0,0.030163963556859734,0,0,5,0
+stop,Don't use my towel.,Would you mind not using my towel?,Don't use my towel.,0,0.2501130828457209,1.0,0.04032308679560528,0,0,5,0
+stop,Stop singing while I'm working.,Could you please not sing while I'm working?,Stop singing while I'm working.,0,0.51923171577864,1.0,0.037734852098818696,0,0,6,0
+stop,Stop finishing my sentences.,Would you mind letting me finish my sentences?,Stop finishing my sentences.,0,0.4038695095771195,1.0,0.03126864431828144,0,0,5,0
+stop,Quit tapping on the table.,Could you please stop tapping on the table?,Quit tapping on the table.,0,0.4807841708694493,1.0,0.05122743339497025,0,0,6,0
+stop,Stop sending me voice messages.,Would you mind sending me text messages instead of voice messages?,Stop sending me voice messages.,0,0.3676776833209612,1.0,0.04543414207844618,0,0,6,0
+announcement,"The pool is closed today, so don't bother coming.",Please note that the pool is closed today.,"The pool is closed today, so don't bother coming.",0,0.564356825960344,1.0,0.04752452571400899,0,0,11,0
+announcement,No more coffee breaks after four. That's final.,Please note that there will be no more coffee breaks after four.,No more coffee breaks after four. That's final.,0,0.5820606952298151,1.0,0.022078069796713985,0,0,10,0
+announcement,"The concert is sold out, too late.","Unfortunately, the concert is sold out.","The concert is sold out, too late.",0,0.6048987421092406,1.0,0.04457630840521751,0,0,9,0
+announcement,"The lab is closed for cleaning, go somewhere else.",Please note that the lab is closed for cleaning.,"The lab is closed for cleaning, go somewhere else.",0,0.6300735616418105,1.0,0.08702878431930507,0,0,11,0
+announcement,"Prices go up next month, like it or not.",Please note that prices will go up next month.,"Prices go up next month, like it or not.",0,0.4545379781072534,1.0,0.04024097235533538,0,0,11,0
+announcement,"Class is over early today, don't ask why.",I wanted to let you know that class ends early today.,"Class is over early today, don't ask why.",0,0.3157806570760256,1.0,0.051830632393544594,0,0,10,0
+announcement,The trip is off because of the weather. Stop asking.,"Unfortunately, the trip is cancelled because of the weather.",The trip is off because of the weather. Stop asking.,0,0.5178261771929235,1.0,0.01789758522014152,0,0,12,0
+announcement,"New rule: no food in the library, period.",Please note that food is not allowed in the library.,"New rule: no food in the library, period.",0,0.38131726980526826,1.0,0.08569873077944454,0,0,11,0

@@ -1,0 +1,22 @@
+{
+  "BLEU": 20.906589090384355,
+  "chrF": 42.53336136375306,
+  "exact_match": 0.0,
+  "content_preservation": 0.5611111111111112,
+  "politeness": 0.9741414154179581,
+  "polite_rate": 1.0,
+  "repetition_rate": 0.08333333333333333,
+  "unk_rate": 0.0,
+  "success_rate": 0.2361111111111111,
+  "avg_len": 13.541666666666666,
+  "n": 72,
+  "BLEU_sacrebleu": 20.906589090384347,
+  "decoding": "greedy",
+  "decode_seconds": 0.041452884674072266,
+  "model": "D_gru_attention",
+  "params": 1401229,
+  "train_minutes": 11.923311467965444,
+  "best_epoch": 7,
+  "system": "D_gru_attention",
+  "split": "challenge"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "B_attention",
+  "best_epoch": 6,
+  "epochs_run": 9,
+  "best_valid_loss": 0.14867320279972718,
+  "best_valid_ppl": 1.1602937464968832,
+  "best_valid_token_acc": 0.9479263283423877,
+  "train_minutes": 11.850370931625367,
+  "device": "cpu",
+  "params": {
+    "embedding (shared)": 175488,
+    "encoder": 395264,
+    "attention": 65792,
+    "decoder RNN": 657408,
+    "output layer": 258907,
+    "copy switch (p_gen)": 0,
+    "total": 1552859
+  }
+}

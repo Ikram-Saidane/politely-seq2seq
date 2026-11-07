@@ -1,0 +1,22 @@
+{
+  "BLEU": 5.501275055379408,
+  "chrF": 25.171231019600082,
+  "exact_match": 0.0,
+  "content_preservation": 0.07476851851851851,
+  "politeness": 0.9686017802148333,
+  "polite_rate": 1.0,
+  "repetition_rate": 0.0,
+  "unk_rate": 0.0,
+  "success_rate": 0.0,
+  "avg_len": 14.375,
+  "n": 72,
+  "BLEU_sacrebleu": 5.501275055379408,
+  "decoding": "greedy",
+  "decode_seconds": 1.312455415725708,
+  "model": "A_lstm",
+  "params": 1192155,
+  "train_minutes": 15.552811233202616,
+  "best_epoch": 20,
+  "system": "A_lstm",
+  "split": "challenge"
+}
