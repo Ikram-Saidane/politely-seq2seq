@@ -2,6 +2,8 @@
 
 NLP course project · *Text generation with encoder–decoder architectures* · Ikram Saidane
 
+**Repository:** https://github.com/Ikram-Saidane/politely-seq2seq
+
 **Deliverables:** the notebook [`NLP_Project.ipynb`](NLP_Project.ipynb), which goes through the whole
 project step by step, and the 2-page report [`NLP_Project_Report.docx`](NLP_Project_Report.docx) (Word; PDF version: [`NLP_Project_Report.pdf`](NLP_Project_Report.pdf)).
 
