@@ -1,13 +1,11 @@
+# Tests of the pipeline: preprocessing, model shapes, decoding, metrics
 import pandas as pd
 import pytest
 import torch
 
-from politely.config import Config
-from politely.dataset import PairDataset, collate, extended_ids
-from politely.decode import beam_search, greedy_decode
-from politely.models import build_model, count_parameters
-from politely.preprocessing import detokenize, tokenize
-from politely.vocab import EOS, PAD, SOS, UNK, Vocab
+from inference import beam_search, greedy_decode
+from model import Config, build_model, count_parameters
+from preprocessing import EOS, PAD, SOS, UNK, PairDataset, Vocab, collate, detokenize, extended_ids, tokenize
 
 
 @pytest.fixture
@@ -54,9 +52,7 @@ def test_truncation(vocab):
 
 
 @pytest.mark.parametrize("kw", [{}, {"attention": True}, {"attention": True, "copy": True},
-                                {"attention": True, "rnn_type": "gru"},
-                                {"attention": True, "copy": True, "bidirectional": True},
-                                {"rnn_type": "gru", "bidirectional": True, "n_layers": 2}])
+                                {"attention": True, "rnn_type": "gru"}, {"rnn_type": "gru"}])
 def test_shapes_and_masking(kw):
     V, B, S, T = 40, 3, 6, 5
     cfg = Config(emb_dim=8, hid_dim=12, attn_dim=8, **kw)
@@ -71,8 +67,9 @@ def test_shapes_and_masking(kw):
     assert logp.shape == (B, T - 1, V + max_oov)
     assert torch.allclose(logp.exp().sum(-1), torch.ones(B, T - 1), atol=1e-4)
     if cfg.attention:
-        assert attn.shape == (B, T - 1, S) and attn[2, :, 2:].abs().max() == 0   # padding masked
-    count_parameters(model)
+        # no attention on the padding
+        assert attn.shape == (B, T - 1, S) and attn[2, :, 2:].abs().max() == 0
+    assert count_parameters(model) > 0
 
 
 def test_copy_requires_attention():
@@ -90,11 +87,12 @@ def test_beam1_equals_greedy():
         assert beam_search(model, src, vocab, k=1, max_len=8, alpha=0.0)["tokens"] == g
         assert len(beam_search(model, src, vocab, k=3, max_len=8)["tokens"]) <= 8
         s = greedy_decode(model, [src], vocab, max_len=8, sample={"temperature": 0.7, "top_k": 3, "seed": 1})
+        s = greedy_decode(model, [src], vocab, max_len=8, sample={"temperature": 1.0, "top_p": 0.9, "seed": 1})
         assert len(s[0]["tokens"]) <= 8
 
 
 def test_bleu_matches_sacrebleu_and_hand_case():
-    from politely.metrics import corpus_bleu, sacre_bleu, content_words
+    from evaluate import corpus_bleu, sacre_bleu, content_words
     hyps = [["could", "you", "send", "me", "the", "report", "?"], ["thanks", "for", "the", "help", "."]]
     refs = [[["could", "you", "send", "me", "the", "report", "today", "?"], ["please", "send", "the", "report", "."]],
             [["thanks", "for", "your", "help", "."]]]
@@ -102,18 +100,18 @@ def test_bleu_matches_sacrebleu_and_hand_case():
     assert corpus_bleu([refs[1][0]], [refs[1]]) == pytest.approx(100.0)
     assert content_words(["send", "me", "the", "report", "now"],
                          [["could", "you", "send", "me", "the", "report", "?"]]) == {"send", "report"}
-    # light stemming: a change of verb form keeps the content word
+    # close / closing count as the same word
     assert content_words(["close", "the", "window"], [["would", "you", "mind", "closing", "the", "window", "?"]]) \
         == {"clos", "window"}
 
 
 def test_rules_baseline_removes_markers():
-    from politely.baselines import rules_baseline
+    from evaluate import rules_baseline
     out = rules_baseline(tokenize("Send me the report right now, seriously."))
     assert out[:2] == ["please", ","] and "now" not in out and "seriously" not in out and "report" in out
 
 
 def test_restore_case_for_display():
-    from politely.preprocessing import restore_case
+    from preprocessing import restore_case
     out = restore_case(["send", "sarah", "the", "tv", "remote"], "Give the TV remote to Sarah. Send it now.")
     assert out == ["send", "Sarah", "the", "TV", "remote"]

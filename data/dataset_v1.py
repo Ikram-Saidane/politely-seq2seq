@@ -1,21 +1,22 @@
-"""First version of the dataset (v1), kept so that the improvement can be seen (report, 3.2).
-
-    python -m politely.dataset_v1
-
-1. regenerates the v1 dataset (same seed, v1 building blocks) into data_v1/
-2. applies exactly the same preprocessing as for the final dataset (normalisation, lowercasing,
-   tokenisation, vocabulary on train only with min_freq 2, numericalisation)
-3. writes data_v1/vocab_v1.json, data_v1/train_v1_preprocessed.csv (tokens and ids) and
-   reports/dataset_v1_vs_v2.json (the two versions side by side)
-"""
+# =============================================================================
+# data/dataset_v1.py
+# First version of the dataset, kept to compare it with the final one.
+# Regenerates data_v1/, preprocesses it exactly like the final dataset
+# and writes reports/dataset_v1_vs_v2.json
+#
+#   python data/dataset_v1.py
+# =============================================================================
 import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT))   # to import preprocessing.py from the project folder
 
 import pandas as pd
 
-from politely.dataset import ROOT
-from politely.generate_dataset import generate, write
-from politely.preprocessing import tokenize
-from politely.vocab import EOS, Vocab, unk_rate
+from generate_dataset import generate, write
+from preprocessing import EOS, Vocab, tokenize, unk_rate
 
 OUT = ROOT / "data_v1"
 
@@ -31,9 +32,9 @@ def describe(df, vocab, challenge):
 
 def main():
     card = write(generate(version=1), out=OUT)
-    (OUT / "politeness_dataset.csv").unlink()          # the split files are enough for v1
+    (OUT / "politeness_dataset.csv").unlink()
     train = pd.read_csv(OUT / "train.csv", keep_default_na=False)
-    # same preprocessing as build_vocab.py: tokenize, vocabulary on train only, min_freq 2
+    # same preprocessing as for the final dataset
     sentences = [tokenize(x) for x in train.impolite.drop_duplicates()] + [tokenize(x) for x in train.polite]
     vocab = Vocab.build(sentences, min_freq=2)
     vocab.save(OUT / "vocab_v1.json")

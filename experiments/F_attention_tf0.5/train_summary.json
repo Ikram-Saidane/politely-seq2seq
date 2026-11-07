@@ -7,13 +7,5 @@
   "best_valid_token_acc": 0.9475861353527757,
   "train_minutes": 17.870011599858604,
   "device": "cpu",
-  "params": {
-    "embedding (shared)": 231040,
-    "encoder": 395264,
-    "attention": 65792,
-    "decoder RNN": 657408,
-    "output layer": 314893,
-    "copy switch (p_gen)": 0,
-    "total": 1664397
-  }
+  "params": 1664397
 }

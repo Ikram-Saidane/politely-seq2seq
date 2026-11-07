@@ -1,11 +1,11 @@
-# Core (training, evaluation)
+# Model, training and evaluation
 torch>=2.1
 numpy>=1.24
 pandas>=2.0
 matplotlib>=3.7
-sacrebleu>=2.3        # only used to cross-check our own BLEU implementation
-# Web interface
-fastapi>=0.110
-uvicorn>=0.27
+sacrebleu>=2.3        # chrF, and to check our own BLEU implementation
+# Interface
+streamlit>=1.50
+altair>=5.0
 # Tests
 pytest>=7.4

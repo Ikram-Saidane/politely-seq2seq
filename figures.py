@@ -1,15 +1,10 @@
-"""Figures for the report, all drawn from files produced by train.py and evaluate.py.
-
-    python -m politely.figures --best B_attention
-
-Writes into reports/figures/:
-    learning_curves.png      validation loss per epoch for every model
-    results_success.png      success rate of every system on test / test_unseen / challenge
-    metrics_test.png         BLEU, content kept, polite rate for every system on test
-    decoding.png             greedy vs beam vs sampling for the best model (validation)
-    errors_by_category.png   success rate per category of the best model on each split
-    attention_<i>.png        attention maps of the best model on a few test sentences
-"""
+# =============================================================================
+# figures.py
+# Figures of the report, made from the files written by train.py and evaluate.py
+# (learning curves, results, decoding strategies, errors per category, attention maps).
+#
+#   python figures.py --best C_copy_nodrop
+# =============================================================================
 import argparse
 import json
 
@@ -19,9 +14,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from politely.dataset import ROOT
-from politely.decode import greedy_decode, load_model
-from politely.preprocessing import tokenize
+from inference import greedy_decode, load_model
+from preprocessing import ROOT, tokenize
 
 FIG = ROOT / "reports" / "figures"
 EXP = ROOT / "experiments"
@@ -140,16 +134,20 @@ def attention_maps(best, n=3):
         fig.tight_layout(); fig.savefig(FIG / f"attention_{i + 1}.png", dpi=140); plt.close(fig)
 
 
-def main(argv=None):
+def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--best", required=True, help="model chosen on the validation set")
-    a = p.parse_args(argv)
+    p.add_argument("--best", required=True, help="best model on the validation set")
+    a = p.parse_args()
     FIG.mkdir(parents=True, exist_ok=True)
     rows = results()
-    learning_curves(); success_bars(rows); decoding(rows, a.best)
-    tab = errors_by_category(a.best)
+    learning_curves()
+    success_bars(rows)
+    decoding(rows, a.best)
+    # errors per category of the final system (best model + beam search 5)
+    final = f"{a.best}__beam5" if (EXP / f"{a.best}__beam5").exists() else a.best
+    tab = errors_by_category(final)
     if tab is not None:
-        tab.round(3).to_csv(ROOT / "reports" / f"success_by_category_{a.best}.csv")
+        tab.round(3).to_csv(ROOT / "reports" / "success_by_category_final.csv")
         print(tab.round(3))
     attention_maps(a.best)
 

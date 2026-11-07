@@ -1,25 +1,22 @@
-"""A politeness classifier written from scratch (logistic regression on bag-of-n-grams, numpy only).
-
-It is used as an automatic judge: "does this sentence sound polite?". It is trained on the TRAIN
-split only (impolite inputs = class 0, polite references = class 1) and validated on sentences it
-never saw, including the held-out phrasings (test_unseen) and the hand-written challenge set, to
-check that it does not just recognise the training templates.
-
-    python -m politely.politeness        # trains, evaluates, saves checkpoints/politeness_clf.json
-"""
+# =============================================================================
+# politeness.py
+# A small politeness classifier used as an automatic judge in the evaluation:
+# logistic regression on words and pairs of words, written with numpy.
+# Trained on the training set only (impolite sentences = 0, polite sentences = 1).
+#
+#   python politeness.py
+# =============================================================================
 import json
 from collections import Counter
 
 import numpy as np
 
-from politely.dataset import ROOT, load_split
-from politely.preprocessing import tokenize
+from preprocessing import ROOT, load_split, tokenize
 
 PATH = ROOT / "checkpoints" / "politeness_clf.json"
 
 
 def features(tokens):
-    """Unigrams and bigrams (with sentence boundaries), as a set: presence, not counts."""
     toks = ["<s>"] + tokens + ["</s>"]
     return set(tokens) | {a + " " + b for a, b in zip(toks, toks[1:])}
 
@@ -44,7 +41,7 @@ class PolitenessClassifier:
         self.vocab = {f: i for i, f in enumerate(sorted(f for f, c in counts.items() if c >= min_count))}
         X, y = self._matrix(sentences), np.asarray(labels, dtype=np.float32)
         self.w, self.b = np.zeros(X.shape[1], dtype=np.float32), 0.0
-        for _ in range(epochs):                    # full-batch gradient descent on the log-loss
+        for _ in range(epochs):   # gradient descent
             p = 1 / (1 + np.exp(-(X @ self.w + self.b)))
             g = p - y
             self.w -= lr * (X.T @ g / len(y) + l2 * self.w)
@@ -52,7 +49,6 @@ class PolitenessClassifier:
         return self
 
     def predict_proba(self, sentences):
-        """P(polite) for each sentence (strings or token lists)."""
         if not len(sentences):
             return np.zeros(0)
         return 1 / (1 + np.exp(-(self._matrix(sentences) @ self.w + self.b)))

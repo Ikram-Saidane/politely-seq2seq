@@ -1,19 +1,25 @@
-"""Dataset statistics and figures (report, section 3).
-
-    python -m politely.analysis
-Writes reports/dataset_stats.json and reports/figures/dataset_*.png
-"""
+# =============================================================================
+# data/analysis.py
+# Statistics of the dataset (sizes, lengths, balance, no sentence shared between splits)
+# and two figures: reports/dataset_stats.json and reports/figures/dataset_*.png
+#
+#   python data/analysis.py
+# =============================================================================
 import json
+import sys
 from collections import Counter
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT))   # to import preprocessing.py from the project folder
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-from politely.dataset import ROOT, load_split
-from politely.metrics import STOP, PUNCT
-from politely.preprocessing import tokenize
+from evaluate import PUNCT, STOP
+from preprocessing import load_split, tokenize
 
 FIG = ROOT / "reports" / "figures"
 SPLITS = ("train", "valid", "test", "test_unseen", "challenge")
@@ -27,7 +33,7 @@ def distinct_ngrams(sentences, n):
 
 
 def overlap(src, tgt):
-    """Share of the polite sentence's tokens that already appear in the impolite one."""
+    # % of the polite sentence's words that are already in the impolite one
     s = set(src)
     return sum(t in s for t in tgt) / len(tgt)
 
@@ -56,7 +62,7 @@ def main():
         }
         if "template_id" in df:
             stats["splits"][s]["impolite_templates"] = int(df.template_id.nunique())
-    # duplicates and leakage checks
+    # check that no sentence is shared between splits
     all_inputs = {s: set(df.impolite) for s, df in data.items()}
     stats["checks"] = {
         "inputs_shared_between_splits": {f"{a}/{b}": len(all_inputs[a] & all_inputs[b])
@@ -69,7 +75,7 @@ def main():
     stats["most_common_content_words_train"] = content.most_common(25)
     (ROOT / "reports" / "dataset_stats.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
 
-    # ---- figure 1: category balance per split
+    # figure 1: number of inputs per category
     cats = sorted(train.category.unique())
     fig, ax = plt.subplots(figsize=(9, 3.8))
     width = 0.2
@@ -82,7 +88,7 @@ def main():
     ax.legend(ncols=4, fontsize=8); ax.spines[["top", "right"]].set_visible(False)
     fig.tight_layout(); fig.savefig(FIG / "dataset_categories.png", dpi=140); plt.close(fig)
 
-    # ---- figure 2: length distributions
+    # figure 2: sentence lengths and overlap
     fig, ax = plt.subplots(1, 2, figsize=(10, 3.6))
     src = [len(tokenize(x)) for x in train.impolite.drop_duplicates()]
     tgt = [len(tokenize(x)) for x in train.polite]

@@ -1,5 +1,6 @@
 {
   "name": "Politely \u2014 impolite-to-polite paraphrase pairs (English)",
+  "version": 2,
   "seed": 42,
   "categories": {
     "request": "asking someone to do something",

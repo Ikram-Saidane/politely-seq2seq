@@ -1,20 +1,8 @@
-"""Hand-written building blocks of the politeness dataset.
-
-Everything in this file was written by hand for the project. The generator
-(`generate_dataset.py`) combines these blocks into (impolite, polite) sentence pairs.
-
-Design rules followed while writing the blocks:
-* The impolite side is rude through TONE only: blunt orders, impatience, dismissive remarks,
-  harsh criticism of a piece of work. It never contains an insult, a slur, a swear word,
-  a personal attack, or anything hateful. `BANNED_WORDS` below is checked on every sentence.
-* Both sides of a pair carry the SAME content (same action, object, person, time, fact):
-  only the way it is said changes. That is what makes it a paraphrase / style-transfer task.
-* Each impolite template has an id. A quarter of them (held_out=True) never appear in
-  training: they are used only by the `test_unseen` split, to measure generalisation to new
-  phrasings instead of memorisation of the training templates.
-"""
-
-# --------------------------------------------------------------------------------------- slots
+# data/resources.py
+# Building blocks of the dataset, written by hand.
+# The impolite sentences are rude only by their tone (orders, impatience), never with insults.
+# Templates marked True are "held out": only used in test_unseen.
+# slots
 NAMES = [
     "Sarah", "Ahmed", "Maria", "Yuki", "Daniel", "Fatima", "Lucas", "Amina", "Chen", "Olivia",
     "Karim", "Sofia", "Mateo", "Priya", "Ethan", "Leila", "Noah", "Ines", "Omar", "Hannah",
@@ -59,7 +47,7 @@ TOPICS = ["the budget", "the website", "the new clients", "the training program"
           "the office move", "the hiring process", "the annual survey", "the social media account",
           "the warehouse inventory", "the summer interns"]
 
-# Time expressions: (impolite form, polite form). Urgent impolite forms become "as soon as possible".
+# (impolite time, polite time): "now" becomes "as soon as possible"
 TIMES = [
     ("today", "today"), ("by Friday", "by Friday"), ("before noon", "before noon"),
     ("by the end of the day", "by the end of the day"), ("this afternoon", "this afternoon"),
@@ -70,8 +58,8 @@ TIMES = [
     ("immediately", "as soon as possible"), ("", ""),
 ]
 
-# --------------------------------------------------------------------------------------- actions
-# (base form, -ing form, past participle, complement). The complement may contain slots.
+# actions
+# (base, -ing, past participle, complement)
 ACTIONS = [
     ("send", "sending", "sent", "me the {doc}"),
     ("send", "sending", "sent", "the {doc} to {name}"),
@@ -128,7 +116,7 @@ ACTIONS = [
     ("water", "watering", "watered", "the plants in the {place}"),
 ]
 
-# Activities somebody declines: (base form, -ing form). May contain slots.
+# things somebody refuses to do: (base, -ing)
 ACTIVITIES = [
     ("come to the {event}", "coming to the {event}"),
     ("join the {event}", "joining the {event}"),
@@ -150,15 +138,15 @@ ACTIVITIES = [
     ("swap my day off with you", "swapping my day off with you"),
 ]
 
-# When a refusal applies (only added to activities that do not already say when).
+# when (only added if the activity has no time)
 REFUSAL_WHEN = ["", "tomorrow", "this weekend", "tonight", "next week", "on {day}", "this time",
                 "on {day} morning", "after work"]
 
-# Where/when a habit happens (only added to behaviours that do not already say it).
+# where / when (only added if the behaviour has none)
 STOP_CONTEXT = ["", "in the {place}", "during the {event}", "every morning", "when I am on the phone",
                 "during lunch", "in front of the clients", "in the middle of the day", "at the {event}"]
 
-# Habits somebody is asked to stop: -ing forms. May contain slots.
+# habits somebody is asked to stop
 BEHAVIOURS = [
     "talking during the presentation", "using my {item} without asking",
     "parking in my spot", "playing music so loud", "interrupting me",
@@ -178,7 +166,7 @@ BEHAVIOURS = [
     "posting about work on social media", "leaving your {item} in the {place}",
 ]
 
-# Pieces of work that get criticised, grouped by type so that only sensible criticisms are used.
+# pieces of work that get criticised, by type
 THINGS = {
     "text": ["report", "essay", "email", "summary", "proposal", "cover letter", "newsletter",
              "speech", "survey", "recipe", "article", "contract"],
@@ -188,11 +176,11 @@ THINGS = {
     "media": ["video", "playlist", "podcast"],
 }
 
-# What the criticised piece of work is for (adds realism and variety).
+# what the piece of work is for
 THING_CONTEXT = ["", "for the {event}", "about {topic}", "for {name}", "you sent this morning",
                  "for the client", "for {day}", "on {topic}", "for the {event} on {day}"]
 
-# (harsh description, soft verb phrase, kinds of work it applies to)
+# (harsh version, soft version, types of work)
 ISSUES = [
     ("way too long", "is a little long", {"text", "media", "plan"}),
     ("impossible to read", "is a bit hard to read", {"text", "visual"}),
@@ -214,9 +202,8 @@ ISSUES = [
     ("way too loud", "is a little loud", {"media"}),
 ]
 
-# Services and the problems that can sensibly happen to each of them (subjects are singular).
-# A problem is (text, tense): "perfect" problems take a duration ("for three days"),
-# "past" problems take a past time ("yesterday"), "present" problems take nothing.
+# services and their problems: (problem, tense)
+# "perfect" -> "for three days", "past" -> "yesterday", "present" -> nothing
 P = {
     "late": ("is late again", "present"), "not_arrived": ("has still not arrived", "perfect"),
     "charged_twice": ("was charged twice", "past"), "wrong_address": ("was sent to the wrong address", "past"),
@@ -258,10 +245,10 @@ DURATIONS = {
     "past": ["yesterday", "this morning", "on {day}", "last week", "again", "two days ago", ""],
     "present": [""],
 }
-# Services that come with a reference number ("my order number 4521").
+# services with a number ("my order number 4521")
 NUMBERED_SERVICES = {"order", "package", "refund", "hotel booking", "flight booking", "delivery"}
 
-# Facts that somebody gets wrong (the speaker corrects them). Slots inside.
+# facts the other person got wrong
 FACTS = [
     "the meeting starts at {clock}", "the deadline is on {day}", "the {doc} is due on {day}",
     "the office is on the {ordinal} floor", "the ticket costs {price}",
@@ -273,7 +260,7 @@ FACTS = [
     "the package weighs two kilos", "the {item} belongs to {name}",
 ]
 
-# Blunt questions: (direct question, embedded question). Slots inside.
+# (direct question, embedded question)
 QUESTIONS = [
     ("where is the {doc}", "where the {doc} is"),
     ("when does the {event} start", "when the {event} starts"),
@@ -309,7 +296,7 @@ QUESTIONS = [
     ("how do I open the {doc}", "how I can open the {doc}"),
 ]
 
-# Changes to an event, announced bluntly or politely.
+# changes to an event
 CHANGES = [
     "is cancelled", "has been moved to {day}", "is postponed until {day}",
     "now starts at {clock}", "has been moved to the {place}", "will be online this time",
@@ -321,9 +308,8 @@ CHANGES = [
     "is full, so registration is closed", "will be recorded for {name}",
 ]
 
-# --------------------------------------------------------------------------------------- templates
-# Each template: (id, text, held_out). Slots in braces are filled by the generator.
-# Capitalisation of the first letter and final punctuation are handled by the generator.
+# templates
+# each template: (id, text, held_out)
 TEMPLATES = {
     "request": {
         "impolite": [
@@ -555,9 +541,7 @@ CATEGORY_DESCRIPTIONS = {
     "announcement": "announcing a change to an event",
 }
 
-# Words that must NEVER appear in the dataset (insults, slurs, swear words, hateful terms).
-# The generator checks every sentence against this list and against the 136-word toxic
-# lexicon of the earlier ParaDetox project when it is available.
+# words that must never appear in the dataset (checked on every sentence)
 BANNED_WORDS = {
     "idiot", "idiots", "stupid", "dumb", "moron", "fool", "fools", "loser", "shut", "hell",
     "damn", "crap", "shit", "fuck", "fucking", "ass", "bitch", "bastard", "jerk", "pathetic",
@@ -566,23 +550,16 @@ BANNED_WORDS = {
 }
 
 
-# Snapshot of the building blocks of VERSION 1 of the dataset (everything above this line), so
-# that the first version can still be regenerated and compared: generate_dataset --version 1.
+# copy of everything above = first version of the dataset (to regenerate data_v1/)
 import copy as _copy
 V1 = _copy.deepcopy({k: v for k, v in dict(globals()).items() if k.isupper() and not k.startswith("_")})
-V1["ITEMS"].insert(V1["ITEMS"].index("calculator") + 1, "car")   # removed in v2 ("move your car out of the library")
+V1["ITEMS"].insert(V1["ITEMS"].index("calculator") + 1, "car")   # "car" was removed in v2
 
 
-# =============================================================================================
-# VERSION 2 EXTENSIONS
-# =============================================================================================
-# Error analysis of the first models (dataset v1) showed that they worked well on the generator's
-# own situations but failed on everyday sentences written by hand: the v1 world (office life,
-# 1,371 words) was too narrow, so the models learned to recognise known slot values instead of
-# learning to KEEP whatever content the input carries. Version 2 widens the world: home life,
-# shopping, transport, school and leisure, many more objects and verbs (incl. phrasal verbs),
-# and optional explanation sentences ("We are already late.") that must be carried over.
-# Nothing here was copied from the hand-written challenge set (data/challenge.csv).
+# VERSION 2
+# The first version only talked about office life and the models failed on my own sentences,
+# so I added home life, shopping, transport, school, more objects and verbs,
+# and an optional reason sentence ("We are already late.") that must be kept.
 
 NAMES += [
     "Bilal", "Clara", "Jonas", "Meriem", "Arthur", "Sana", "Lea", "Mehdi", "Ruth", "Tariq",
@@ -610,7 +587,7 @@ CITIES += ["London", "Oslo", "Prague", "Athens", "Istanbul", "Marrakesh", "Lyon"
 TOPICS += ["the school trip", "the holiday rota", "the new menu", "the parking rules",
            "the cleaning schedule", "the garden project", "the library renovation", "the charity sale"]
 
-# ----------------------------------------------------------------------------- everyday objects
+# everyday objects
 OPENABLE = ["window", "door", "back door", "front door", "gate", "curtains", "blinds",
             "garage door", "kitchen window", "bathroom door", "balcony door", "car window",
             "cupboard", "drawer", "fridge", "shutters"]
@@ -645,9 +622,8 @@ FACILITIES = ["pool", "gym", "library", "canteen", "cafeteria", "museum", "post 
               "bike shop", "pharmacy", "bakery", "laundry room", "study room", "tennis court"]
 COUNT = ["two", "three", "four", "five", "six", "ten", "twelve", "twenty"]
 
-# ----------------------------------------------------------------------------- explanations
-# Optional second sentence explaining WHY: kept unchanged in the polite version.
-# Keys match the "reason group" given to an action (5th element of an ACTION tuple).
+# explanations
+# optional second sentence that explains why (same in the polite version)
 REASONS = {
     "cold": ["It's freezing in the {room}", "The wind is blowing my papers away", "It's raining outside",
              "The heating is on", "The baby is sleeping"],
@@ -721,7 +697,7 @@ ACTIONS += [
     ("lend", "lending", "lent", "me your {obj_s} for the {event}", "need"),
     ("save", "saving", "saved", "me a seat at the {event}", None),
 ]
-# reason groups for the v1 actions that involve work documents
+# v1 actions about work documents use the "work" reasons
 WORK_VERBS = {"send", "check", "review", "update", "finish", "prepare", "share", "submit", "sign",
               "print", "upload", "translate", "explain"}
 
@@ -859,7 +835,7 @@ QUESTIONS += [
     ("why is the {device} still on", "why the {device} is still on"),
 ]
 
-# Facilities (pool, gym, ...) are announced like events.
+# facilities (pool, gym...) are announced like events
 FACILITY_CHANGES = [
     "is closed today", "is closed for repairs until {day}", "will close at {clock} today",
     "opens one hour later on {day}", "is closed this weekend", "will be closed on {day}",
@@ -873,7 +849,7 @@ CHANGES += [
 
 STOP_CONTEXT += ["at night", "when I'm cooking", "after 10 pm"]
 
-# What a criticised piece of work is for, by kind (v1 contexts suit documents, not food or art).
+# contexts for food / art / music (the v1 contexts only make sense for documents)
 THING_CONTEXT_BY_KIND = {
     "food": ["", "for the {event}", "you made yesterday", "from the canteen", "at the {event}"],
     "art": ["", "for the {event}", "in the {room}", "for {name}", "you finished yesterday"],
