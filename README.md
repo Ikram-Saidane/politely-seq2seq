@@ -3,7 +3,7 @@
 NLP course project · *Text generation with encoder–decoder architectures* · Ikram Saidane
 
 **Deliverables:** the notebook [`NLP_Project.ipynb`](NLP_Project.ipynb), which goes through the whole
-project step by step, and the 2-page report [`NLP_Project_Report.pdf`](NLP_Project_Report.pdf).
+project step by step, and the 2-page report [`NLP_Project_Report.docx`](NLP_Project_Report.docx) (Word; PDF version: [`NLP_Project_Report.pdf`](NLP_Project_Report.pdf)).
 
 ## 1. Presentation and objective
 
@@ -167,7 +167,7 @@ training data, and about half of its rewrites of hand-written sentences are full
 ```
 politely-seq2seq/
 ├── NLP_Project.ipynb     the whole project step by step (explanations, code, results)
-├── NLP_Project_Report.pdf   the 2-page report
+├── NLP_Project_Report.docx  the 2-page report (Word) + NLP_Project_Report.pdf
 ├── preprocessing.py     normalisation, tokenisation, vocabulary, ids, padding, batches
 ├── model.py             hyper-parameters (Config), encoder, attention, decoder, copy mechanism
 ├── train.py             training loop, teacher forcing, early stopping, sanity check
