@@ -1,6 +1,6 @@
 """Start the Politely web interface and open it in the default browser.
 
-    python run_app.py            (port 8000)
+    python run_app.py            (port 8765)
     python run_app.py --port 8080 --no-browser
 """
 import argparse
@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--port", type=int, default=8000)
+    p.add_argument("--port", type=int, default=8765)
     p.add_argument("--no-browser", action="store_true")
     a = p.parse_args()
     if not any((ROOT / "checkpoints").glob("*.pt")):

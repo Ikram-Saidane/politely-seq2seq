@@ -39,7 +39,7 @@ pip install -e .                      # makes the `politely` package importable
 ## 2. Launch the interface
 
 ```bash
-python run_app.py                     # opens http://127.0.0.1:8000
+python run_app.py                     # opens http://127.0.0.1:8765
 python run_app.py --port 8080 --no-browser
 ```
 
@@ -57,7 +57,7 @@ Invalid input is handled with a clear message: empty text, only numbers or symbo
 300 characters or 40 tokens, unknown model. Words never seen in training are listed in a warning.
 The interface is responsive (phone, tablet, desktop) and has a light and a dark theme.
 
-The API is documented at `http://127.0.0.1:8000/api/docs`.
+The API is documented at `http://127.0.0.1:8765/api/docs`.
 
 ## 3. Reproduce everything
 
