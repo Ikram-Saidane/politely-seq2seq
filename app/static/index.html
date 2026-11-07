@@ -201,23 +201,96 @@
   <div class="hero compact">
     <p class="eyebrow">From text to text</p>
     <h1>How it works</h1>
+    <p class="lede">Politely is a sequence-to-sequence network: an <b>encoder</b> reads the impolite sentence, a <b>decoder</b> writes the polite one word by word, an <b>attention</b> mechanism tells the decoder where to look, and a <b>copy switch</b> lets it reuse the words of the input. Everything was implemented and trained from scratch in PyTorch.</p>
   </div>
+
   <ol class="pipeline">
-    <li><b>Preprocess</b><span>Normalise Unicode, lowercase, split into words and punctuation marks.</span></li>
-    <li><b>Vocabulary</b><span>1,805 entries: 1,801 words seen at least twice in training plus &lt;PAD&gt; &lt;SOS&gt; &lt;EOS&gt; &lt;UNK&gt;.</span></li>
-    <li><b>Represent</b><span>Each word id becomes a 128-dimensional embedding vector.</span></li>
-    <li><b>Encode</b><span>An LSTM reads the sentence and produces one hidden state per word.</span></li>
-    <li><b>Attend</b><span>At each step the decoder scores every input state and builds a weighted context vector.</span></li>
-    <li><b>Decode</b><span>An LSTM writes the polite sentence one word at a time, from &lt;SOS&gt; until &lt;EOS&gt;.</span></li>
-    <li><b>Evaluate</b><span>BLEU, chrF, exact match, content kept, politeness (own classifier), success rate.</span></li>
+    <li><b>Preprocess</b><span>Unicode normalisation, lowercasing, then words and punctuation marks become separate tokens.</span><code class="trace">close · the · window · now · .</code></li>
+    <li><b>Vocabulary</b><span>1,805 entries learned on the training split: words seen at least twice plus &lt;PAD&gt; &lt;SOS&gt; &lt;EOS&gt; &lt;UNK&gt;.</span><code class="trace">390 · 4 · 573 · 58 · 5 · 2</code></li>
+    <li><b>Represent</b><span>Each id becomes a 128-dimensional embedding vector, learned during training and shared by both sides.</span><code class="trace">[B, n] → [B, n, 128]</code></li>
+    <li><b>Encode</b><span>An LSTM (hidden size 256) reads the sentence and produces one state per word; its last state starts the decoder.</span><code class="trace">[B, n, 256]</code></li>
+    <li><b>Attend</b><span>At every step the decoder scores each input state, turns the scores into weights with a softmax and builds a context vector.</span><code class="trace">α = softmax(score)</code></li>
+    <li><b>Decode</b><span>An LSTM writes the polite sentence one word at a time, from &lt;SOS&gt; until it produces &lt;EOS&gt; (40 words at most).</span><code class="trace">would · you · mind · closing …</code></li>
+    <li><b>Copy</b><span>A switch p<sub>gen</sub> mixes "generate a vocabulary word" with "copy an input word", so names, numbers and unknown words survive.</span><code class="trace">P = p·P<sub>vocab</sub> + (1−p)·α</code></li>
   </ol>
-  <div class="card prose">
-    <h2>Limits worth knowing</h2>
-    <ul>
-      <li>The training data is synthetic: everyday workplace and service situations, written from templates. Sentences far from these situations are rewritten less reliably — the “Hand-written” results in the Performance tab measure exactly that.</li>
-      <li>English only, one sentence (or two short ones) at a time, up to 40 tokens.</li>
-      <li>Politeness is judged by a small bag-of-words classifier trained on the same data: a useful indicator, not a human judgement.</li>
-    </ul>
+
+  <div class="card">
+    <h2>A worked example</h2>
+    <p class="muted">What the final model (C, beam search with 5 beams) does with one sentence. The ids are the real ones from <code>data/vocab.json</code>.</p>
+    <div class="flow">
+      <div class="flow-step"><span class="flow-label">Input</span><p>Close the window now.</p></div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step"><span class="flow-label">Token ids</span><p class="mono">390 4 573 58 5 &lt;EOS&gt;</p></div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step"><span class="flow-label">Generated ids</span><p class="mono">27 6 50 1274 4 573 43 170 43 64 10</p></div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step accent"><span class="flow-label">Output</span><p>Would you mind closing the window as soon as possible?</p></div>
+    </div>
+    <p class="muted small">"Would you mind … ?" is the polite frame the decoder generates; "the window" is copied from the input; the impatient "now" becomes "as soon as possible".</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>Inside one decoding step</h2>
+      <ol class="steps">
+        <li>Embed the previous word (the true one in training, the model's own guess when generating).</li>
+        <li>Score every encoder state <code>h<sub>j</sub></code> against the decoder state <code>s</code>: <code>score<sub>j</sub> = vᵀ tanh(W<sub>e</sub>h<sub>j</sub> + W<sub>d</sub>s)</code>; padding is masked.</li>
+        <li>Softmax the scores into attention weights <code>α<sub>j</sub></code> (they sum to 1: the heat map of the Rewrite tab).</li>
+        <li>Context vector <code>c = Σ α<sub>j</sub> h<sub>j</sub></code>, fed to the LSTM with the word embedding.</li>
+        <li>Output layer → probabilities over the 1,805 words; the copy switch adds the attention weights onto the input words.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>How it was trained</h2>
+      <dl class="facts">
+        <dt>Data</dt><dd>28,800 synthetic pairs, 9 balanced categories, no insults</dd>
+        <dt>Objective</dt><dd>token-level cross-entropy, &lt;PAD&gt; ignored</dd>
+        <dt>Optimiser</dt><dd>Adam, learning rate 0.001, halved on plateau</dd>
+        <dt>Batches</dt><dd>64 sentences, dropout 0.3, gradient clipping 1.0</dd>
+        <dt>Teacher forcing</dt><dd>the decoder sees the true previous word (ratio 1.0)</dd>
+        <dt>Stopping</dt><dd>early stopping after 3 epochs without progress on validation</dd>
+        <dt>Check</dt><dd>every model first memorised 40 pairs (sanity test)</dd>
+        <dt>Hardware</dt><dd>CPU only, about 90 seconds per epoch</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>Three ways to choose the next word</h2>
+      <div class="dec-list">
+        <div><b>Greedy</b><p>Always take the most probable word. Fast and deterministic.</p></div>
+        <div><b>Beam search</b><p>Keep the k best partial sentences and compare whole sentences (score normalised by length). Used by default: best on the validation set.</p></div>
+        <div><b>Sampling</b><p>Draw the next word at random from the distribution, sharpened by a temperature. More varied phrasings, more risk of mistakes.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>The models you can choose</h2>
+      <div class="table-scroll"><table class="data compact-table">
+        <thead><tr><th>Model</th><th>What changes</th><th>Params</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>LSTM, no attention (baseline)</td><td>1.30 M</td></tr>
+          <tr><td>B</td><td>+ Bahdanau attention</td><td>1.66 M</td></tr>
+          <tr class="best"><td>C</td><td>+ copy mechanism (final)</td><td>1.67 M</td></tr>
+          <tr><td>C'</td><td>C + word dropout</td><td>1.67 M</td></tr>
+          <tr><td>D</td><td>B with GRU cells</td><td>1.40 M</td></tr>
+          <tr><td>E</td><td>B with hidden size 128 / 512</td><td>0.88 / 4.42 M</td></tr>
+          <tr><td>F</td><td>B, teacher forcing 0.5</td><td>1.66 M</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Reading the Rewrite screen</h2>
+    <div class="glossary">
+      <div><b>Politeness</b><p>Probability that the sentence is polite, given by a logistic-regression classifier trained on word pairs. The middle line marks 50 %.</p></div>
+      <div><b>Meaning kept</b><p>Content words of your sentence (actions, objects, names, times). Green = found in the output, struck through = lost.</p></div>
+      <div><b>Underlined words</b><p>Words the copy switch took mostly from your sentence rather than from the vocabulary.</p></div>
+      <div><b>Attention map</b><p>One row per generated word; darker cells are the input words the decoder looked at to write it.</p></div>
+      <div><b>Confidence</b><p>With greedy decoding or sampling, the probability the model gave to each word it wrote.</p></div>
+      <div><b>Warnings</b><p>Words never seen in training, repeated words, or an output the classifier does not find polite.</p></div>
+    </div>
   </div>
 </section>
 </main>
