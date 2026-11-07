@@ -1,0 +1,11 @@
+checkpoints
+experiments
+archive_v1
+data
+data_v1
+reports
+tests
+report_latex
+*.ipynb
+*.docx
+NLP_Project_Dataset.csv

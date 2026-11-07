@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politely — rewriting impolite sentences with a seq2seq model</title>
+<meta name="description" content="NLP course project: an LSTM encoder–decoder with attention and a copy mechanism, trained from scratch, that rewrites impolite English sentences politely. Try the model in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,750&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23127A68'/><path d='M8 11h16v8H15l-5 4v-4H8z' fill='%23F7F8FC'/></svg>">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">Politely</a>
+  <nav aria-label="Project links">
+    <a href="#how">How it works</a>
+    <a href="#results">Results</a>
+    <a href="#read">Report &amp; code</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <h1>Say the same thing, <span class="kind">kindly.</span></h1>
+  <p class="lede">Politely rewrites a blunt English sentence into a polite one that keeps its meaning. It is an LSTM encoder–decoder with attention and a copy mechanism, built and trained from scratch for an NLP course. The model below runs entirely in your browser.</p>
+
+  <div class="demo" id="demo">
+    <label for="input" class="demo-label">Your impolite sentence</label>
+    <textarea id="input" rows="2" maxlength="300" spellcheck="false">Give me the keys to the storeroom right now.</textarea>
+    <div class="examples" role="group" aria-label="Example sentences">
+      <span class="examples-label">Try:</span>
+    </div>
+    <div class="controls">
+      <div class="seg" role="radiogroup" aria-label="Decoding">
+        <label><input type="radio" name="decoding" value="beam" checked> Beam search</label>
+        <label><input type="radio" name="decoding" value="greedy"> Greedy</label>
+      </div>
+      <button id="go" class="go" disabled>Loading the model…</button>
+    </div>
+
+    <div class="result" id="result" hidden>
+      <p class="said"><span class="tag">You wrote</span><span id="before" class="sentence rude"></span></p>
+      <p class="said"><span class="tag">Politely</span><span id="after" class="sentence polite"></span></p>
+      <dl class="scores">
+        <div><dt>Politeness before</dt><dd id="pb"></dd></div>
+        <div><dt>Politeness after</dt><dd id="pa"></dd></div>
+        <div><dt>Content words kept</dt><dd id="ck"></dd></div>
+        <div><dt>Time</dt><dd id="tm"></dd></div>
+      </dl>
+      <p id="notes" class="notes"></p>
+      <details class="attention">
+        <summary>Where the model looked for each word</summary>
+        <p class="small">Each row is a word the model wrote; darker cells are the input words it paid attention to. Words copied from your sentence sit on the diagonal.</p>
+        <div id="heatmap" class="heatmap"></div>
+      </details>
+    </div>
+    <p id="error" class="error" role="alert" hidden></p>
+  </div>
+  <p class="fine">Highlighted words are the content of your sentence (who, what, when). A good rewrite changes the tone and keeps them all.</p>
+</section>
+
+<section id="how" class="block">
+  <h2>How it works</h2>
+  <p class="intro">Everything is written with PyTorch from basic layers: no pretrained model and no API. A sentence goes through five steps.</p>
+  <ol class="steps">
+    <li><h3>Clean and split</h3><p>Lowercase, normalise quotes, and split into words and punctuation. <span class="mono">Close the window now.</span> becomes <span class="mono">close · the · window · now · .</span> and then ids <span class="mono">390 4 573 58 5</span>.</p></li>
+    <li><h3>Read the sentence</h3><p>Each id becomes a 128-number embedding. An LSTM encoder (hidden size 256) reads the words one by one and keeps one state per word.</p></li>
+    <li><h3>Look back</h3><p>At every output step, Bahdanau attention scores all the input words and builds a weighted summary of the ones that matter now.</p></li>
+    <li><h3>Write or copy</h3><p>An LSTM decoder proposes the next word from a vocabulary of 1,805 words. A copy switch can instead take a word from your sentence, which keeps names, objects and numbers intact.</p></li>
+    <li><h3>Choose the sentence</h3><p>Greedy decoding takes the best word each time. Beam search keeps the five best partial sentences and returns the best complete one. It stops at the end-of-sentence token.</p></li>
+  </ol>
+  <p class="aside-note">The model was trained on 28,800 sentence pairs with cross-entropy, Adam and early stopping, about 30 minutes on a CPU for the final model.</p>
+</section>
+
+<section id="results" class="block">
+  <h2>Results</h2>
+  <p class="intro">An output counts as a success when a politeness classifier judges it polite, every content word of the input is kept, and no word is repeated. Three test sets go from easy to hard.</p>
+  <div class="table-wrap">
+    <table class="results">
+      <caption>Success rate (share of rewrites that succeed)</caption>
+      <thead><tr><th scope="col">System</th><th scope="col">Test<span>same phrasings as training</span></th><th scope="col">Unseen phrasings<span>never seen in training</span></th><th scope="col">Hand-written<span>72 sentences, outside the data</span></th></tr></thead>
+      <tbody id="results-body"></tbody>
+    </table>
+  </div>
+  <div class="findings">
+    <p><strong>Copying made the biggest difference.</strong> On hand-written sentences, adding the copy mechanism raises success from 22% to 76%. A larger model, GRU cells or a different teacher forcing ratio did not help.</p>
+    <p><strong>Checked by hand.</strong> 53% of the final model's rewrites of hand-written sentences are fully acceptable (polite, same meaning, grammatical), against 17% without copying. The automatic score is too optimistic far from the training data. These labels come from a single annotator and were produced with the help of an AI assistant.</p>
+  </div>
+</section>
+
+<section class="block">
+  <h2>What works and what does not</h2>
+  <p class="intro">Real outputs of the final model on sentences written by hand.</p>
+  <div class="pairs" id="pairs"></div>
+  <p class="aside-note">The model picks its polite frame from a few cue words. A refusal it does not recognise can turn into a request, and copied words keep their form even when the grammar needs a change.</p>
+</section>
+
+<section class="block">
+  <h2>The data</h2>
+  <p class="intro">Public corpora for this task are full of insults, so the dataset was built for the project: a program combines situations, objects and people with 108 impolite and 54 polite phrasings written by hand. Every impolite sentence has polite versions with exactly the same content.</p>
+  <dl class="facts">
+    <div><dt>9</dt><dd>balanced categories: requests, reminders, refusals, criticism, complaints, disagreement, questions, "stop" and announcements</dd></div>
+    <div><dt>18,072</dt><dd>impolite sentences and 39,672 pairs, split by content so that no sentence appears twice</dd></div>
+    <div><dt>1,371 → 1,805</dt><dd>words in the vocabulary. The first version only covered office life and its models almost never succeeded on hand-written sentences, so it was widened to everyday life.</dd></div>
+  </dl>
+</section>
+
+<section id="read" class="block read">
+  <h2>Report and code</h2>
+  <ul class="links">
+    <li><a href="files/NLP_Project_Report.pdf">Report (PDF, 2 pages)</a><span>Method, results and discussion</span></li>
+    <li><a href="https://github.com/Ikram-Saidane/politely-seq2seq/blob/main/NLP_Project.ipynb">Notebook</a><span>Every step from the data to the evaluation, with code and outputs</span></li>
+    <li><a href="https://github.com/Ikram-Saidane/politely-seq2seq">Source code on GitHub</a><span>Model, training, evaluation, dataset, trained weights and the Streamlit app</span></li>
+  </ul>
+</section>
+</main>
+
+<footer>
+  <p>Ikram Saidane — NLP course project, November 2026.</p>
+  <p class="small">The demo runs the final model (C, 1.67 M parameters) in your browser with the same computations as the Python code; its outputs were checked to be identical on 327 sentences.</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -282,6 +282,18 @@ The interface opens at http://localhost:8501. Its tabs:
 - **Dataset**: splits, balance, examples, vocabulary, version 1 vs version 2.
 - **How it works**: the pipeline, a worked example with the real ids, and the models.
 
+## Website
+
+The folder `website/` is a static website that presents the project and runs the **final model
+directly in the browser** (JavaScript port of the encoder, attention, copy mechanism, greedy and
+beam search in `website/js/model.js`). Its outputs are identical to the Python code on 327 test
+sentences. `vercel.json` makes Vercel serve this folder.
+
+```bash
+python website/export_model.py          # exports the weights of the final model to website/model/
+cd website && python -m http.server     # local preview at http://localhost:8000
+```
+
 ## 15. Examples of use
 
 Real outputs of the final model (`python inference.py …`, beam search):
