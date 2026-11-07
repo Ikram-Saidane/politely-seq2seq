@@ -1,4 +1,4 @@
-"""Generate the synthetic impolite -> polite paraphrase dataset.
+"""Generate the impolite -> polite paraphrase dataset.
 
     python -m politely.generate_dataset            (from the project root, with src/ on the path)
 
@@ -233,7 +233,7 @@ def write(rows):
     by_split = Counter(r["split"] for r in rows)
     inputs = Counter(r["split"] for r in rows if r["ref_index"] == 0)
     card = {
-        "name": "Politely — synthetic impolite-to-polite paraphrase pairs (English)",
+        "name": "Politely — impolite-to-polite paraphrase pairs (English)",
         "seed": SEED, "categories": R.CATEGORY_DESCRIPTIONS,
         "pairs_per_split": dict(by_split), "inputs_per_split": dict(inputs),
         "references_per_input": {"train": REFS_TRAIN, "valid/test/test_unseen": REFS_EVAL},

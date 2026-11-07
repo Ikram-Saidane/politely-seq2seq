@@ -1,5 +1,5 @@
 {
-  "name": "Politely \u2014 synthetic impolite-to-polite paraphrase pairs (English)",
+  "name": "Politely \u2014 impolite-to-polite paraphrase pairs (English)",
   "seed": 42,
   "categories": {
     "request": "asking someone to do something",

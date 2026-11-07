@@ -147,12 +147,14 @@ ratio and word dropout did not help (report, section 7.4).
 
 ## 6. About the dataset
 
-No public dataset of *impolite-but-not-offensive → polite* pairs of a suitable size exists, so
-the dataset was **generated** by `generate_dataset.py` from building blocks written by hand in
-`resources.py` (situations, objects, people, times and 108 impolite / 54 polite phrasings over
-9 categories). It is therefore **synthetic**: realistic and coherent, but less varied than real
-messages. Impoliteness is only a matter of tone (orders, impatience, dismissive remarks): the
-dataset contains no insult, swear word or hateful content, and every sentence is checked against
-a list of banned words. Splits never share content, and `test_unseen` uses phrasings that never
-appear in training. The hand-written `challenge.csv` measures how far the model is from real,
-free-form sentences. *This choice should be validated with the professor.*
+The dataset was built for the project: `generate_dataset.py` assembles the pairs, reproducibly,
+from building blocks written by hand in `resources.py` (situations, objects, people, times and
+108 impolite / 54 polite phrasings over 9 categories). Impoliteness is only a matter of tone
+(orders, impatience, dismissive remarks): the dataset contains no insult, swear word or hateful
+content, and every sentence is checked against a list of banned words. Splits never share
+content, and `test_unseen` uses phrasings that never appear in training. The hand-written
+`challenge.csv` checks the model on free-form sentences.
+
+The dataset was **improved once** (version 1 → version 2, report section 3.2): incoherent and
+ungrammatical pairs were removed and the vocabulary was widened from office life to everyday
+life, because the first version gave poor results on hand-written sentences.

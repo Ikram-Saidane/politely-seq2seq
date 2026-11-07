@@ -1,4 +1,4 @@
-"""Hand-written building blocks of the synthetic politeness dataset.
+"""Hand-written building blocks of the politeness dataset.
 
 Everything in this file was written by hand for the project. The generator
 (`generate_dataset.py`) combines these blocks into (impolite, polite) sentence pairs.
