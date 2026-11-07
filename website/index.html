@@ -39,6 +39,7 @@
       </div>
       <button id="go" class="go" disabled>Loading the model…</button>
     </div>
+    <div class="progress" id="progress" aria-hidden="true"><i id="progress-bar"></i></div>
 
     <div class="result" id="result" hidden>
       <p class="said"><span class="tag">You wrote</span><span id="before" class="sentence rude"></span></p>
@@ -50,6 +51,22 @@
         <div><dt>Time</dt><dd id="tm"></dd></div>
       </dl>
       <p id="notes" class="notes"></p>
+      <div class="actions">
+        <button type="button" class="ghost" id="copy">Copy the polite sentence</button>
+        <button type="button" class="ghost" id="compare">Compare with model B (no copy mechanism)</button>
+      </div>
+      <div class="compare" id="compare-box" hidden>
+        <p class="said"><span class="tag">Model B</span><span id="b-out" class="sentence"></span></p>
+        <p class="small" id="b-note"></p>
+      </div>
+      <details class="hood">
+        <summary>Under the hood: tokens, ids, copy or generate</summary>
+        <div class="hood-grid">
+          <div><h4>Input tokens and ids</h4><div id="in-tokens" class="tokens"></div></div>
+          <div><h4>Each output word: copied or generated?</h4><div id="copy-bars" class="copy-bars"></div>
+          <p class="small">The copy switch gives the probability of taking the word from your sentence (dark) rather than from the vocabulary (light).</p></div>
+        </div>
+      </details>
       <details class="attention">
         <summary>Where the model looked for each word</summary>
         <p class="small">Each row is a word the model wrote; darker cells are the input words it paid attention to. Words copied from your sentence sit on the diagonal.</p>
@@ -71,7 +88,17 @@
     <li><h3>Write or copy</h3><p>An LSTM decoder proposes the next word from a vocabulary of 1,805 words. A copy switch can instead take a word from your sentence, which keeps names, objects and numbers intact.</p></li>
     <li><h3>Choose the sentence</h3><p>Greedy decoding takes the best word each time. Beam search keeps the five best partial sentences and returns the best complete one. It stops at the end-of-sentence token.</p></li>
   </ol>
-  <p class="aside-note">The model was trained on 28,800 sentence pairs with cross-entropy, Adam and early stopping, about 30 minutes on a CPU for the final model.</p>
+  <div class="training">
+    <div>
+      <h3>Training</h3>
+      <p>28,800 sentence pairs, token-level cross-entropy, Adam (learning rate 0.001, halved on plateau), batch 64, dropout 0.3, teacher forcing, and early stopping on the validation loss. The final model trained for about 30 minutes on a CPU.</p>
+      <p>Attention makes learning much faster: the best validation loss comes at epoch 5 for B, against epoch 24 for A. Without copying, the training loss ends a little below the validation loss (slight overfitting, stopped by early stopping); with copying, both stay equal.</p>
+    </div>
+    <figure class="chart">
+      <div id="curves" role="img" aria-label="Validation loss per epoch of models A, B and C"></div>
+      <figcaption>Validation loss per epoch (dashed: training loss)</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section id="results" class="block">
@@ -86,7 +113,11 @@
   </div>
   <div class="findings">
     <p><strong>Copying made the biggest difference.</strong> On hand-written sentences, adding the copy mechanism raises success from 22% to 76%. A larger model, GRU cells or a different teacher forcing ratio did not help.</p>
-    <p><strong>Checked by hand.</strong> 53% of the final model's rewrites of hand-written sentences are fully acceptable (polite, same meaning, grammatical), against 17% without copying. The automatic score is too optimistic far from the training data. These labels come from a single annotator and were produced with the help of an AI assistant.</p>
+    <div>
+      <p><strong>Checked by hand.</strong> Every rewrite of the 72 hand-written sentences was judged acceptable (polite, same meaning, grammatical), partial or failed. The automatic score is too optimistic far from the training data.</p>
+      <div class="human" id="human"></div>
+      <p class="small">One annotator; the labels were produced with the help of an AI assistant.</p>
+    </div>
   </div>
 </section>
 

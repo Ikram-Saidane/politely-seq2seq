@@ -80,14 +80,32 @@ function concat(...arrays) {
   return out;
 }
 
+async function fetchWithProgress(url, onProgress) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${url}: ${response.status}`);
+  const total = Number(response.headers.get("content-length")) || 0;
+  if (!onProgress || !response.body || !total) return response.arrayBuffer();
+  const reader = response.body.getReader();
+  const out = new Uint8Array(total);
+  let received = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    out.set(value, received);
+    received += value.length;
+    onProgress(received / total);
+  }
+  return out.buffer;
+}
+
 // ---------------------------------------------------------------------------
 // The model
 // ---------------------------------------------------------------------------
 export class PolitelyModel {
-  static async load(base = "model/") {
+  static async load(base = "model/", onProgress = null) {
     const [info, buffer] = await Promise.all([
       fetch(base + "model.json").then((r) => r.json()),
-      fetch(base + "weights.bin").then((r) => r.arrayBuffer()),
+      fetchWithProgress(base + "weights.bin", onProgress),
     ]);
     return new PolitelyModel(info, buffer);
   }
@@ -179,6 +197,10 @@ export class PolitelyModel {
     const lmx = Math.max(...logits);
     let z = 0;
     for (let i = 0; i < this.V; i++) z += Math.exp(logits[i] - lmx);
+    if (!this.cfg.copy) {   // model B: softmax over the vocabulary only
+      const lz = Math.log(z);
+      return { logp: logits.map((x) => x - lmx - lz), state: next, weights, pgen: null };
+    }
     // copy mechanism: P(w) = p_gen * P_vocab(w) + (1 - p_gen) * attention on w
     const pgen = sigmoid(linear(t["decoder.p_gen.weight"], t["decoder.p_gen.bias"], concat(context, s, emb), 1, 2 * H + this.E)[0]);
     const dist = new Float64Array(this.V + enc.oovs.length);
@@ -285,6 +307,8 @@ export class PolitelyModel {
     const content = this.contentWords(tokens, r.tokens);
     return {
       inputTokens: tokens,
+      inputIds: tokens.map((w) => this.stoi.get(w) ?? UNK),
+      outputIds: r.tokens.map((w) => this.stoi.get(w) ?? -1),
       tokens: r.tokens,
       text: detokenize(restoreCase(r.tokens, text), true),
       attention: r.attention,

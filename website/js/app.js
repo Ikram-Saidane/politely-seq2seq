@@ -62,8 +62,39 @@ for (const label of document.querySelectorAll(".seg label")) {
   label.append(input, span);
 }
 
+// human evaluation of the 72 hand-written sentences (reports/human_eval_summary.json)
+const HUMAN = [["B · attention, no copy", 12, 4, 56], ["C · + copy (final)", 38, 12, 22]];
+$("human").innerHTML = HUMAN.map(([name, a, p, f]) => {
+  const n = a + p + f;
+  return `<div class="hrow"><span class="hname">${esc(name)}</span><div class="hbar">
+    <i class="acc" style="flex:${a}" title="acceptable: ${a}">${pct(a / n)}</i><i class="par" style="flex:${p}" title="partial: ${p}">${p >= 8 ? pct(p / n) : ""}</i><i class="fail" style="flex:${f}" title="failed: ${f}">${pct(f / n)}</i></div></div>`;
+}).join("") + `<p class="legend"><span class="acc"></span>acceptable <span class="par"></span>partial <span class="fail"></span>failed</p>`;
+
+// learning curves (experiments/*/history.json)
+fetch("model/curves.json").then((r) => r.json()).then((curves) => {
+  const series = [["A_lstm", "A · no attention", "#9AA3B5"], ["B_attention", "B · attention", "#E0A33A"], ["C_copy_nodrop", "C · copy (final)", "#127A68"]];
+  const W = 560, H = 300, L = 44, B = 46, T = 12, R = 12;
+  const maxEpoch = Math.max(...Object.values(curves).map((c) => c.length));
+  const x = (e) => L + (e - 1) / (maxEpoch - 1) * (W - L - R);
+  const yMax = 1.2, y = (v) => T + (1 - Math.min(v, yMax) / yMax) * (H - T - B);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+  for (const v of [0, 0.3, 0.6, 0.9, 1.2]) {
+    svg += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="grid"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(1)}</text>`;
+  }
+  for (let e = 5; e <= maxEpoch; e += 5) svg += `<text x="${x(e)}" y="${H - B + 18}" text-anchor="middle">${e}</text>`;
+  svg += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">epoch</text>`;
+  for (const [key, label, color] of series) {
+    const c = curves[key];
+    const path = (k) => c.map((p, i) => `${i ? "L" : "M"}${x(p.epoch).toFixed(1)},${y(p[k]).toFixed(1)}`).join("");
+    svg += `<path d="${path("train")}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.8"/>`;
+    svg += `<path d="${path("valid")}" fill="none" stroke="${color}" stroke-width="2.5"/>`;
+  }
+  $("curves").innerHTML = `<p class="legend">${series.map(([, label, color]) =>
+    `<span style="background:${color}"></span>${esc(label)}`).join(" ")}</p>` + svg + "</svg>";
+});
+
 // ---------- the demo ----------
-let model = null;
+let model = null, modelB = null, lastText = "", lastPolite = "";
 
 function highlight(text, words) {
   // marks the words of `text` whose stem is one of the content words
@@ -116,6 +147,17 @@ function run() {
     if (r.politenessAfter < 0.5) notes.push("The politeness classifier does not find the rewrite polite enough.");
     $("notes").innerHTML = notes.join(" ");
     $("heatmap").innerHTML = heatmap(r.inputTokens, r.tokens, r.attention);
+    $("in-tokens").innerHTML = r.inputTokens.map((t, i) =>
+      `<span class="tok"><b>${esc(t)}</b><small>${r.inputIds[i] === 3 ? "3 &lt;UNK&gt;" : r.inputIds[i]}</small></span>`).join("") +
+      `<span class="tok end"><b>&lt;EOS&gt;</b><small>2</small></span>`;
+    $("copy-bars").innerHTML = [...r.tokens, "<end>"].slice(0, r.pgen.length).map((t, i) => {
+      const c = 1 - r.pgen[i];
+      return `<div class="cb"><span>${esc(t)}</span><i><b style="width:${(c * 100).toFixed(0)}%"></b></i><em>${c >= 0.5 ? "copied" : "generated"}</em></div>`;
+    }).join("");
+    lastText = text;
+    lastPolite = r.text;
+    $("compare-box").hidden = true;
+    $("compare").disabled = false;
     $("result").hidden = false;
     $("go").disabled = false;
     $("go").textContent = "Rewrite politely";
@@ -128,12 +170,47 @@ function showError(msg) {
 }
 
 $("go").addEventListener("click", run);
+
+$("copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(lastPolite);
+    $("copy").textContent = "Copied";
+  } catch {
+    $("copy").textContent = "Select the sentence to copy it";
+  }
+  setTimeout(() => { $("copy").textContent = "Copy the polite sentence"; }, 1800);
+});
+
+$("compare").addEventListener("click", async () => {
+  const btn = $("compare");
+  btn.disabled = true;
+  try {
+    if (!modelB) {
+      btn.textContent = "Loading model B…";
+      modelB = await PolitelyModel.load("model/B/", (f) => { btn.textContent = `Loading model B… ${Math.round(f * 100)}%`; });
+    }
+    const strategy = document.querySelector('input[name="decoding"]:checked').value;
+    const r = modelB.rewrite(lastText, strategy);
+    $("b-out").innerHTML = r.text ? highlight(r.text, r.kept) : "(no output)";
+    $("b-note").textContent = `Same encoder–decoder with attention but without the copy mechanism: ${r.kept.length} of ${r.keys.length} content words kept` +
+      (r.lost.length ? ` (lost: ${r.lost.join(", ")}).` : ".");
+    $("compare-box").hidden = false;
+  } catch {
+    $("b-note").textContent = "Model B could not be loaded. Reload the page to try again.";
+    $("compare-box").hidden = false;
+  }
+  btn.textContent = "Compare with model B (no copy mechanism)";
+});
 $("input").addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); run(); }
 });
 
-PolitelyModel.load("model/").then((m) => {
+PolitelyModel.load("model/", (f) => {
+  $("progress-bar").style.width = `${Math.round(f * 100)}%`;
+  $("go").textContent = `Loading the model… ${Math.round(f * 100)}%`;
+}).then((m) => {
   model = m;
+  $("progress").classList.add("done");
   $("go").disabled = false;
   $("go").textContent = "Rewrite politely";
   run();
