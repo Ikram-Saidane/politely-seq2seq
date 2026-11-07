@@ -566,6 +566,13 @@ BANNED_WORDS = {
 }
 
 
+# Snapshot of the building blocks of VERSION 1 of the dataset (everything above this line), so
+# that the first version can still be regenerated and compared: generate_dataset --version 1.
+import copy as _copy
+V1 = _copy.deepcopy({k: v for k, v in dict(globals()).items() if k.isupper() and not k.startswith("_")})
+V1["ITEMS"].insert(V1["ITEMS"].index("calculator") + 1, "car")   # removed in v2 ("move your car out of the library")
+
+
 # =============================================================================================
 # VERSION 2 EXTENSIONS
 # =============================================================================================

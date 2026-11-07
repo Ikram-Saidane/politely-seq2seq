@@ -25,7 +25,13 @@ import re
 from collections import Counter
 from pathlib import Path
 
+from types import SimpleNamespace
+
 from politely import resources as R
+
+R2 = R                                   # building blocks of version 2 (final dataset)
+R1 = SimpleNamespace(**R.V1)             # building blocks of version 1 (first dataset)
+V2 = True                                # which version is being generated (set by generate())
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
@@ -33,6 +39,7 @@ SEED = 42
 
 # Inputs per category and split (9 categories -> x9).
 N_TRAIN, N_VALID, N_TEST, N_UNSEEN = 1600, 150, 150, 100
+N_TRAIN_V1 = 1200      # version 1 had 1,200 training inputs per category
 REFS_EVAL = 3          # references per input in valid / test / test_unseen
 REFS_TRAIN = 2         # references per input used as training pairs
 
@@ -51,6 +58,8 @@ def _base_slots(rng):
         "price": rng.choice(R.PRICES), "topic": rng.choice(R.TOPICS),
     }
     out["place2"] = rng.choice([p for p in R.PLACES if p != out["place"]])
+    if not V2:
+        return out
     # v2 slots: everyday objects, rooms, bills, facilities
     out.update({
         "openable": rng.choice(R.OPENABLE), "device": rng.choice(R.DEVICES), "loud": rng.choice(R.LOUD),
@@ -70,7 +79,7 @@ P_REASON = 0.3          # share of requests / reminders / stops that come with a
 
 
 def _reason(group, b, rng):
-    if group and rng.random() < P_REASON:
+    if V2 and group and rng.random() < P_REASON:
         return _fill(rng.choice(R.REASONS[group]), b)
     return ""
 
@@ -81,7 +90,7 @@ def sample_content(category, rng):
     if category in ("request", "reminder"):
         action = rng.choice(R.ACTIONS)
         base, ing, pp, comp = action[:4]
-        group = action[4] if len(action) > 4 else ("work" if base in R.WORK_VERBS else None)
+        group = action[4] if len(action) > 4 else ("work" if V2 and base in R.WORK_VERBS else None)
         it_ok = base not in NO_IT and comp.startswith(("the ", "my ", "your "))
         comp = _fill(comp, b)
         t_imp, t_pol = rng.choice(R.TIMES)
@@ -89,8 +98,8 @@ def sample_content(category, rng):
             t_imp, t_pol = "today", "today"
         reason = _reason(group, b, rng)
         s = {"base": base, "ing": ing, "pp": pp, "comp": comp, "time": t_imp, "ptime": t_pol,
-             "reason": reason, "it_ok": it_ok}
-        key = (base, comp, reason, t_pol)
+             "reason": reason, "it_ok": it_ok or not V2}
+        key = (base, comp, reason, t_pol) if V2 else (base, comp, t_pol)
     elif category == "refusal":
         a_base, a_ing = rng.choice(R.ACTIVITIES)
         has_when = any(w in a_base for w in ("{day}", "week", "month", "weekend", "holiday"))
@@ -101,7 +110,8 @@ def sample_content(category, rng):
     elif category == "criticism":
         kind = rng.choice(sorted(R.THINGS))
         thing = rng.choice(R.THINGS[kind])
-        ctx = _fill(rng.choice(R.THING_CONTEXT_BY_KIND.get(kind, R.THING_CONTEXT)), b)
+        contexts = R.THING_CONTEXT_BY_KIND.get(kind, R.THING_CONTEXT) if V2 else R.THING_CONTEXT
+        ctx = _fill(rng.choice(contexts), b)
         thing = thing + (" " + ctx if ctx else "")
         harsh, soft, _ = rng.choice([i for i in R.ISSUES if kind in i[2]])
         s = {"thing": thing, "harsh": harsh, "soft": soft}
@@ -128,9 +138,9 @@ def sample_content(category, rng):
                                          "without", "{place}", "{event}", " to "))
         ctx = "" if has_ctx else _fill(rng.choice(R.STOP_CONTEXT), b)
         s = {"behaviour": _fill(beh, b) + (" " + ctx if ctx else ""), "reason": _reason("stop", b, rng)}
-        key = (s["behaviour"], s["reason"])
+        key = (s["behaviour"], s["reason"]) if V2 else (s["behaviour"],)
     elif category == "announcement":
-        if rng.random() < 0.3:      # v2: facilities (pool, gym...) are announced too
+        if V2 and rng.random() < 0.3:      # v2: facilities (pool, gym...) are announced too
             s = {"event": b["facility"], "change": _fill(rng.choice(R.FACILITY_CHANGES), b)}
         else:
             s = {"event": rng.choice(R.EVENTS), "change": _fill(rng.choice(R.CHANGES), b)}
@@ -164,9 +174,13 @@ def banned_tokens(text, banned):
 
 
 # --------------------------------------------------------------------------------------- generation
-def generate(seed=SEED, extra_banned=None):
-    """extra_banned: optional path to a larger list of offensive words, one per line, used only
+def generate(seed=SEED, extra_banned=None, version=2):
+    """version: 2 = final dataset, 1 = first version (kept to show the improvement).
+    extra_banned: optional path to a larger list of offensive words, one per line, used only
     as an additional filter (it is not part of the dataset)."""
+    global R, V2
+    R, V2 = (R2, True) if version == 2 else (R1, False)
+    n_train = N_TRAIN if V2 else N_TRAIN_V1
     rng = random.Random(seed)
     banned = set(R.BANNED_WORDS)
     if extra_banned:
@@ -174,7 +188,7 @@ def generate(seed=SEED, extra_banned=None):
                    if w.strip() and not w.startswith("#")}
 
     rows, used_keys = [], set()
-    plan = [("train", N_TRAIN, False), ("valid", N_VALID, False), ("test", N_TEST, False),
+    plan = [("train", n_train, False), ("valid", N_VALID, False), ("test", N_TEST, False),
             ("test_unseen", N_UNSEEN, True)]
     for category, tpl in R.TEMPLATES.items():
         seen_tpl = [t for t in tpl["impolite"] if not t[2]]
@@ -218,7 +232,8 @@ def generate(seed=SEED, extra_banned=None):
     return rows
 
 
-def write(rows):
+def write(rows, out=None):
+    DATA = Path(out) if out else globals()["DATA"]
     DATA.mkdir(exist_ok=True)
     fields = ["id", "split", "category", "template_id", "ref_index", "impolite", "polite"]
     with open(DATA / "politeness_dataset.csv", "w", newline="", encoding="utf-8") as f:
@@ -234,7 +249,7 @@ def write(rows):
     inputs = Counter(r["split"] for r in rows if r["ref_index"] == 0)
     card = {
         "name": "Politely — impolite-to-polite paraphrase pairs (English)",
-        "seed": SEED, "categories": R.CATEGORY_DESCRIPTIONS,
+        "version": 2 if V2 else 1, "seed": SEED, "categories": R.CATEGORY_DESCRIPTIONS,
         "pairs_per_split": dict(by_split), "inputs_per_split": dict(inputs),
         "references_per_input": {"train": REFS_TRAIN, "valid/test/test_unseen": REFS_EVAL},
         "impolite_templates": {c: {"seen": sum(not t[2] for t in v["impolite"]),
@@ -250,6 +265,9 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--extra-banned", help="optional extra list of offensive words to filter")
+    ap.add_argument("--version", type=int, default=2, choices=[1, 2],
+                    help="2 = final dataset (data/); 1 = first version (use politely.dataset_v1)")
     a = ap.parse_args()
-    card = write(generate(extra_banned=a.extra_banned))
+    card = write(generate(extra_banned=a.extra_banned, version=a.version),
+                 out=None if a.version == 2 else ROOT / "data_v1")
     print(json.dumps({k: card[k] for k in ("pairs_per_split", "inputs_per_split")}, indent=2))

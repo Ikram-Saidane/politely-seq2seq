@@ -73,11 +73,12 @@ python -m politely.train --config configs/C_copy.json                     # 5. t
 python -m politely.evaluate --baselines                                   # 6. evaluate the baselines
 python -m politely.evaluate --models C_copy                               #    ... and a model (greedy)
 python -m politely.evaluate --models C_copy --decoding beam5 --splits valid   # other decoding
-python -m politely.figures --best C_copy                                  # 7. figures of the report
+python -m politely.figures --best C_copy_nodrop                           # 7. figures of the report
+python -m politely.dataset_v1                                            # first dataset version + its preprocessing -> data_v1/
 pytest                                                                    # tests (pipeline + API)
 ```
 
-`train_all.bat` (Windows) and `run_all.sh` (Linux) run steps 5–6 for all eight configurations
+`train_all.bat` runs steps 5–7 for all eight configurations
 (about 3 hours on a CPU). The generator is deterministic (seed 42): it rebuilds exactly the same
 dataset.
 
@@ -96,15 +97,19 @@ politely-seq2seq/
 │   ├── challenge.csv            72 hand-written pairs (independent check)
 │   ├── dataset_card.json        sizes and generation settings
 │   └── vocab.json               the vocabulary
-├── experiments/<model>/    training log, history, curves, metrics and predictions per split
+├── experiments/<model>/    training log, learning curves and metrics per split (predictions for the final model)
 ├── reports/
-│   ├── report.md           the technical report (10 sections required by the assignment)
+│   ├── report.pdf          the report (2 pages, the 10 sections required by the assignment)
+│   ├── report_detailed.pdf the detailed version (all tables, figures and analyses)
 │   ├── results.md/.json    every metric of every system on every split
 │   └── figures/            all figures used in the report
-├── archive_v1/             results of the first dataset version (kept for the report, section 7.4)
+├── data_v1/                first version of the dataset and its preprocessing (vocab_v1.json,
+│                           train_v1_preprocessed.csv with tokens and ids), to compare with data/
+├── archive_v1/             results of the models trained on the first version
 ├── src/politely/
 │   ├── resources.py        hand-written vocabulary, situations and phrasings of the dataset
-│   ├── generate_dataset.py dataset generator
+│   ├── generate_dataset.py dataset generator (versions 1 and 2)
+│   ├── dataset_v1.py       rebuilds the first version and its preprocessing (data_v1/)
 │   ├── analysis.py         dataset statistics and figures
 │   ├── preprocessing.py    normalisation and tokenisation
 │   ├── vocab.py            vocabulary, special tokens, numericalisation
@@ -121,7 +126,7 @@ politely-seq2seq/
 │   └── figures.py          figures of the report
 ├── tests/                  pytest: pipeline and web API
 ├── run_app.py / run_app.bat     launch the interface
-├── train_all.bat / run_all.sh   train and evaluate everything
+├── train_all.bat           train and evaluate everything
 └── requirements.txt, pyproject.toml
 ```
 
@@ -130,7 +135,7 @@ politely-seq2seq/
 Final system: **C_copy_nodrop** (LSTM + attention + copy mechanism, 1.67 M parameters) with
 **beam search (5 beams)**, both chosen on the validation set. Success = judged polite AND all
 content words kept AND no repeated word. Full tables: `reports/results.md`; analysis:
-`reports/report.md`.
+`reports/report.pdf`.
 
 | System | test | test_unseen (new phrasings) | challenge (hand-written) |
 |---|---|---|---|
@@ -143,7 +148,7 @@ content words kept AND no repeated word. Full tables: `reports/results.md`; anal
 
 The model is excellent on sentences like its training data and about half of its rewrites of
 free-form sentences are fully acceptable. Bigger models, GRU cells, a lower teacher-forcing
-ratio and word dropout did not help (report, section 7.4).
+ratio and word dropout did not help (detailed report, section 7.4).
 
 ## 6. About the dataset
 
@@ -155,6 +160,6 @@ content, and every sentence is checked against a list of banned words. Splits ne
 content, and `test_unseen` uses phrasings that never appear in training. The hand-written
 `challenge.csv` checks the model on free-form sentences.
 
-The dataset was **improved once** (version 1 → version 2, report section 3.2): incoherent and
+The dataset was **improved once** (version 1 in `data_v1/` → version 2 in `data/`; detailed report, section 3.2): incoherent and
 ungrammatical pairs were removed and the vocabulary was widened from office life to everyday
 life, because the first version gave poor results on hand-written sentences.

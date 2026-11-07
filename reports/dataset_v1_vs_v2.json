@@ -1,0 +1,24 @@
+{
+  "v1": {
+    "vocab_size": 1371,
+    "inputs": 10800,
+    "pairs": 21600,
+    "impolite_word_types": 1265,
+    "impolite_len_mean": 12.85,
+    "challenge_unk_token_rate": 0.1927
+  },
+  "v2": {
+    "vocab_size": 1805,
+    "inputs": 14400,
+    "pairs": 28800,
+    "impolite_word_types": 1693,
+    "impolite_len_mean": 13.05,
+    "challenge_unk_token_rate": 0.1146
+  },
+  "v1_pairs_per_split": {
+    "train": 21600,
+    "valid": 4050,
+    "test": 4050,
+    "test_unseen": 2700
+  }
+}
