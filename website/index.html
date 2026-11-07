@@ -28,7 +28,8 @@
 
   <div class="demo" id="demo">
     <label for="input" class="demo-label">Your impolite sentence</label>
-    <textarea id="input" rows="2" maxlength="300" spellcheck="false">Give me the keys to the storeroom right now.</textarea>
+    <textarea id="input" rows="2" maxlength="300" spellcheck="false">Bring me a coffee on your way back.</textarea>
+    <p class="scope">Works best on one or two everyday sentences that <strong>ask</strong>, <strong>remind</strong>, <strong>refuse</strong>, <strong>criticise</strong>, <strong>complain</strong>, <strong>disagree</strong>, <strong>ask a question</strong>, <strong>ask someone to stop</strong> or <strong>announce</strong> something. It was not trained on insults, slang or very short exclamations (<em>Shut up!</em>), and it often gets negations wrong.</p>
     <div class="examples" role="group" aria-label="Example sentences">
       <span class="examples-label">Try:</span>
     </div>
@@ -50,6 +51,7 @@
         <div><dt>Content words kept</dt><dd id="ck"></dd></div>
         <div><dt>Time</dt><dd id="tm"></dd></div>
       </dl>
+      <div id="warn" class="warn" hidden></div>
       <p id="notes" class="notes"></p>
       <div class="actions">
         <button type="button" class="ghost" id="copy">Copy the polite sentence</button>

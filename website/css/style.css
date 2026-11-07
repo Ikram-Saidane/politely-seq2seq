@@ -298,3 +298,7 @@ h4 { font-family: var(--display); font-weight: 600; font-size: 15px; margin: 0 0
   .cb { grid-template-columns: 84px 1fr 66px; }
   .actions .ghost { width: 100%; }
 }
+
+.scope { font-size: 14px; color: var(--muted); margin: 10px 2px 0; max-width: 80ch; }
+.scope strong { font-weight: 600; color: var(--ink); }
+.warn { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: #FBEDEB; color: #7A2620; font-size: 15px; border-left: 4px solid var(--rude); }

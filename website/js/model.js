@@ -2,6 +2,8 @@
 // Same computations as model.py / inference.py, with the weights exported by export_model.py.
 
 const PAD = 0, SOS = 1, EOS = 2, UNK = 3;
+// words of the blunt frame ("Wrong.", "Stop ...", "way too") that a polite rewrite is expected to change
+const FRAME_WORDS = new Set(["wrong", "true", "false", "that's", "correct", "incorrect", "right", "stop", "quit", "way"]);
 
 // ---------------------------------------------------------------------------
 // Text processing (same rules as preprocessing.py)
@@ -126,6 +128,8 @@ export class PolitelyModel {
     this.stop = new Set(info.stop);
     this.punct = new Set(info.punct);
     this.rude = new Set(info.rude_words);
+    // whole rude expressions ("right now", "hurry up"): removed before looking for content words
+    this.rudeRe = new RegExp("(^| )(" + (info.rude_markers || []).map((m) => m.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")(?= |$)", "g");
     this.clf = info.politeness;
   }
 
@@ -295,7 +299,12 @@ export class PolitelyModel {
   }
 
   contentWords(tokens, output) {
-    const keys = [...new Set(tokens)].filter((w) => !this.stop.has(w) && !this.punct.has(w) && !this.rude.has(w));
+    // content = the words of the input once the rude expressions, function words and punctuation are removed
+    let text = " " + tokens.join(" ") + " ";
+    let prev;
+    do { prev = text; text = text.replace(this.rudeRe, "$1"); } while (text !== prev);
+    const rest = text.trim().split(/\s+/).filter(Boolean);
+    const keys = [...new Set(rest)].filter((w) => !this.stop.has(w) && !this.punct.has(w) && !FRAME_WORDS.has(w));
     const outStems = new Set(output.map(stem));
     const kept = keys.filter((w) => outStems.has(stem(w)));
     return { keys, kept, lost: keys.filter((w) => !kept.includes(w)) };

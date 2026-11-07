@@ -1,13 +1,15 @@
 import { PolitelyModel, tokenize, stem } from "./model.js";
 
-// Sentences written by hand (challenge set) and a few new ones
+// one hand-written sentence per kind of message (challenge set, all judged acceptable)
 const EXAMPLES = [
-  "Give me the keys to the storeroom right now.",
-  "Turn the music down.",
-  "You're wrong. Water boils at 100 degrees.",
+  "Bring me a coffee on your way back.",
+  "No. I won't proofread your thesis.",
+  "The soup is way too salty.",
   "My room has no hot water.",
-  "Stop interrupting me during meetings.",
-  "I won't lend you any more money.",
+  "Wrong. We agreed on blue for the logo.",
+  "Which bus goes to the airport?",
+  "Stop sending me voice messages.",
+  "The trip is off because of the weather. Stop asking.",
 ];
 
 // Success rates from reports/results.json (C = final system, beam search 5)
@@ -141,10 +143,18 @@ function run() {
     $("pa").className = r.politenessAfter > r.politenessBefore ? "up" : "";
     $("ck").textContent = r.keys.length ? `${r.kept.length} of ${r.keys.length}` : "—";
     $("tm").textContent = `${Math.round(ms)} ms`;
+    // honest warnings: when one of these checks fails, the rewrite is probably wrong
+    const problems = [];
+    if (r.lost.length) problems.push(`it lost ${r.lost.length > 1 ? "words" : "a word"} of your sentence (${r.lost.map(esc).join(", ")})`);
+    if (r.tokens.some((t, i) => i && t === r.tokens[i - 1] && /\p{L}/u.test(t))) problems.push("it repeats a word");
+    if (r.politenessAfter < 0.5) problems.push("the politeness classifier does not find it polite");
+    if (r.inputTokens.filter((t) => /\p{L}/u.test(t)).length < 3) problems.push("very short inputs are outside what the model learned");
+    const negationText = text.replace(/\b(that's|that is|it's|it is) not (true|right|correct)\b/gi, "");
+    if (/\b(not|never)\b|n't\b/i.test(negationText) && !/\b(not|never|no)\b|n't\b/i.test(r.text)) problems.push("your sentence contains a negation that the rewrite dropped, so the meaning may be reversed");
+    $("warn").innerHTML = problems.length ? `<strong>This rewrite is probably wrong:</strong> ${problems.join("; ")}.` : "";
+    $("warn").hidden = !problems.length;
     const notes = [];
-    if (r.lost.length) notes.push(`<span class="lost">Lost: ${r.lost.map(esc).join(", ")}.</span>`);
     if (r.unknown.length) notes.push(`Words never seen in training: ${r.unknown.map(esc).join(", ")}. The copy mechanism can still reuse them.`);
-    if (r.politenessAfter < 0.5) notes.push("The politeness classifier does not find the rewrite polite enough.");
     $("notes").innerHTML = notes.join(" ");
     $("heatmap").innerHTML = heatmap(r.inputTokens, r.tokens, r.attention);
     $("in-tokens").innerHTML = r.inputTokens.map((t, i) =>

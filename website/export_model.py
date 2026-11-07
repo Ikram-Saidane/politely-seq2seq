@@ -45,6 +45,7 @@ config = {k: ckpt["config"][k] for k in ("emb_dim", "hid_dim", "attn_dim", "max_
 info = {"config": config, "tensors": manifest, "vocab": vocab,
         "stop": sorted(STOP), "punct": sorted(PUNCT),
         "rude_words": sorted({w for m in RUDE_MARKERS for w in m.split()}),
+        "rude_markers": sorted(RUDE_MARKERS, key=len, reverse=True),
         "politeness": {"vocab": clf["vocab"], "w": [round(float(x), 6) for x in clf["w"]], "b": float(clf["b"])}}
 (OUT / "model.json").write_text(json.dumps(info, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 print(f"weights.bin: {offset * 4 / 1e6:.1f} MB, model.json: {(OUT / 'model.json').stat().st_size / 1e6:.2f} MB")
