@@ -7,5 +7,7 @@ sacrebleu>=2.3        # chrF, and to check our own BLEU implementation
 # Interface
 streamlit>=1.50
 altair>=5.0
+# Notebook (NLP_Project.ipynb)
+notebook>=7.0
 # Tests
 pytest>=7.4

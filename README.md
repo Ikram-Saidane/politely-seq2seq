@@ -2,6 +2,9 @@
 
 NLP course project · *Text generation with encoder–decoder architectures* · Ikram Saidane
 
+**Deliverables:** the notebook [`NLP_Project.ipynb`](NLP_Project.ipynb), which goes through the whole
+project step by step, and the 2-page report [`NLP_Project_Report.pdf`](NLP_Project_Report.pdf).
+
 ## 1. Presentation and objective
 
 Politely takes a blunt, impatient or dismissive English sentence and generates a polite sentence
@@ -163,6 +166,8 @@ training data, and about half of its rewrites of hand-written sentences are full
 
 ```
 politely-seq2seq/
+├── NLP_Project.ipynb     the whole project step by step (explanations, code, results)
+├── NLP_Project_Report.pdf   the 2-page report
 ├── preprocessing.py     normalisation, tokenisation, vocabulary, ids, padding, batches
 ├── model.py             hyper-parameters (Config), encoder, attention, decoder, copy mechanism
 ├── train.py             training loop, teacher forcing, early stopping, sanity check
@@ -184,7 +189,7 @@ politely-seq2seq/
 ├── checkpoints/         trained models (*.pt) and the politeness classifier
 ├── experiments/         per model: training log, learning curves, metrics, predictions
 ├── archive_v1/          results of the first models trained on data_v1
-├── reports/             report.pdf (2 pages), report_detailed.pdf, results, figures/
+├── reports/             report_detailed.pdf (17 pages), results, figures/
 ├── tests/               pytest tests (pipeline and interface)
 ├── run_app.bat          Windows: install and launch the interface
 ├── train_all.bat        Windows: rebuild the data, train and evaluate everything
@@ -240,6 +245,9 @@ python figures.py --best C_copy_nodrop
 
 # 4. tests
 python -m pytest
+
+# 5. the notebook (about 10 minutes, run all cells from top to bottom)
+jupyter notebook NLP_Project.ipynb
 ```
 
 ## 13. Training
@@ -285,4 +293,4 @@ Give me my keys back, I need them right now.
 ```
 
 The last example shows a typical limit: the output is polite and keeps the request, but the
-explanation "I need them" is lost. Successes and failures are analysed in `reports/report.pdf`.
+explanation "I need them" is lost. Successes and failures are analysed in the notebook and in `NLP_Project_Report.pdf`.
