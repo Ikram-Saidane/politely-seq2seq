@@ -348,8 +348,9 @@ with tab_results:
             strokeDash=alt.StrokeDash("set:N", sort=["train", "validation"]),
             tooltip=["model", "set", "epoch", alt.Tooltip("loss:Q", format=".3f")]).properties(height=360),
             width="stretch")
-        st.caption("The validation loss stays at or below the training loss (dropout is only active in training): "
-                   "no overfitting. Training stops after 3 epochs without improvement.")
+        st.caption("Without the copy mechanism the training loss ends slightly below the validation loss "
+                   "(A: 0.11 vs 0.17): mild overfitting, controlled by early stopping (3 epochs without improvement). "
+                   "With copy (C), both losses stay equal.")
 
     st.subheader("Decoding strategies (validation set, model C)")
     dec = [r for r in results if r["split"] == "valid" and r["system"].startswith("C_copy_nodrop")]

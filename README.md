@@ -125,7 +125,7 @@ input ids → Embedding (128) → LSTM encoder (1 layer, unidirectional, hidden 
 | Embedding / hidden dimension / layers | 128 / 256 / 1 |
 | Teacher forcing | 1.0 (0.5 for model F) |
 | Epochs | at most 30, early stopping after 3 epochs without improvement on validation |
-| Hardware | CPU, about 90 s per epoch |
+| Hardware | CPU, about 1 to 1.5 minutes per epoch |
 
 The training and validation losses are saved for each epoch (`experiments/<model>/history.json`
 and `curves.png`). The best model on validation is saved in `checkpoints/<model>.pt`.
@@ -255,7 +255,7 @@ jupyter notebook NLP_Project.ipynb
 
 ```bash
 python train.py --config configs/C_copy_nodrop.json --overfit 40   # sanity check: memorise 40 pairs
-python train.py --config configs/C_copy_nodrop.json                # full training (about 1 hour on CPU)
+python train.py --config configs/C_copy_nodrop.json                # full training (about 30 minutes on CPU)
 ```
 
 Replace the config to train another model (`A_lstm`, `B_attention`, `C_copy`, `D_gru_attention`,
