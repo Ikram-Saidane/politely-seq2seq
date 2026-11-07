@@ -168,6 +168,7 @@ training data, and about half of its rewrites of hand-written sentences are full
 politely-seq2seq/
 ├── NLP_Project.ipynb     the whole project step by step (explanations, code, results)
 ├── NLP_Project_Report.docx  the 2-page report (Word) + NLP_Project_Report.pdf
+├── NLP_Project_Dataset.csv  the whole dataset in one file (all splits, with the "split" column)
 ├── preprocessing.py     normalisation, tokenisation, vocabulary, ids, padding, batches
 ├── model.py             hyper-parameters (Config), encoder, attention, decoder, copy mechanism
 ├── train.py             training loop, teacher forcing, early stopping, sanity check
